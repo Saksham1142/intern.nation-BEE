@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notify Results | intern.nation</title>
+  <link rel="stylesheet" href="../css/notifyresults.css">
+  <link rel="stylesheet" href = "../css/interview.css">
+  <link rel="icon" type="jpeg" href="../assets/logo.jpeg">
+</head>
+<body>
+  <header>
+    <img src="../assets/logo.jpeg" alt="intern.nation Logo">
+    <h1>intern.nation - Company Dashboard</h1>
+  </header>
+
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <ul>
+        <li><a href="#profile-section">👤 Profile</a></li>
+        <li><a href="viewapplicants.html">📋 View Applicants</a></li>
+        <li><a href="interview.html">📅 Schedule Interview</a></li>
+        <li><a href="approveinterview.html">✅ Approve Interviews</a></li>
+        <li><a href="#" class="active">✉️ Notify Results</a></li>
+        <li><a href="jobposting.html">➕ Post Job/Internship</a></li>
+        <li><a href="payments.html">💳 Payments and Subscription</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <h2>Notify Interview Results</h2>
+      <p class="subtitle">Review applicants, update their final status, and send notifications instantly.</p>
+
+      <div class="applicants-container" id="applicantList"></div>
+
+      <div class="action-bar">
+        <button id="sendNotifications">🚀 Send All Notifications</button>
+      </div>
+
+      <div id="toast" class="toast">✅ Notifications sent successfully!</div>
+    </main>
+  </div>
+
+  <footer>
+    &copy; 2025 intern.nation | All Rights Reserved
+  </footer>
+
+  <script src="../js/notifyresults.js"></script>
+</body>
+</html>

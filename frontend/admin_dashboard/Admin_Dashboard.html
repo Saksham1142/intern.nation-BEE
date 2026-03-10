@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | intern.nation</title>
+  <link rel="stylesheet" href="../css/Admin_Dashboard.css">
+  <link rel="icon" type="jpeg" href="../assets/logo.jpeg">
+</head>
+
+<body>
+
+  <header>
+    <img src="../assets/logo.jpeg" alt="intern.nation Logo">
+    <h1>intern.nation - Admin Dashboard</h1>
+  </header>
+
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <ul>
+        <li><a href="#profile-section">👤 Profile</a></li>
+        <li><a href="Admin_Statistics.html">📊 View All Statistics</a></li>
+        <li><a href="Admin_ManageUsers.html">👥 Manage Users</a></li>
+        <li><a href="Admin_ManageCompanies.html">🏢 Manage Companies</a></li>
+        <li><a href="Admin_ViewSchedules.html">📅 View Schedules</a></li>
+        <li><a href="Admin_Settings.html">⚙ System Settings</a></li>
+        <li><a href="#logout-confirm">🚪 Logout</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+
+      <section id="statistics">
+        <h2>Admin Overview</h2>
+        <div class="stats">
+          <div class="stat-card">
+            <h3>320</h3>
+            <p>Total Applications</p>
+          </div>
+          <div class="stat-card">
+            <h3>85</h3>
+            <p>Active Companies</p>
+          </div>
+          <div class="stat-card">
+            <h3>540</h3>
+            <p>Registered Students</p>
+          </div>
+          <div class="stat-card">
+            <h3>25</h3>
+            <p>Pending Approvals</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="users">
+        <h3>Manage Users</h3>
+        <div class="table-container">
+          <table class="users-table">
+            <thead>
+              <tr>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="User Name">Priya Sharma</td>
+                <td data-label="Email">priya@example.com</td>
+                <td data-label="Role">Student</td>
+                <td data-label="Status"><span class="badge active">Active</span></td>
+                <td data-label="View"><button class="action-button view">View</button></td>
+              </tr>
+              <tr>
+                <td data-label="User Name">Aditya Singh</td>
+                <td data-label="Email">aditya@example.com</td>
+                <td data-label="Role">Company HR</td>
+                <td data-label="Status"><span class="badge pending">Pending</span></td>
+                <td data-label="View"><button class="action-button view">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="companies">
+        <h3>Pending Company Registrations</h3>
+        <div class="table-container">
+          <table class="companies-table">
+            <thead>
+              <tr>
+                <th>Company Name</th>
+                <th>Status</th>
+                <th>Actions</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Company Name">InnovateTech Solutions</td>
+                <td data-label="Status"><span class="badge pending">PENDING</span></td>
+                <td data-label="Actions">
+                  <button class="action-button approve">Approve</button>
+                  <button class="action-button reject">Reject</button>
+                </td>
+                <td data-label="View"><button class="action-button view">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="jobs">
+        <h3>Pending Job Postings</h3>
+        <div class="table-container">
+          <table class="jobs-table">
+            <thead>
+              <tr>
+                <th>Job Title</th>
+                <th>Company</th>
+                <th>Status</th>
+                <th>Actions</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Job Title">Frontend Developer Intern</td>
+                <td data-label="Company">Microsoft India</td>
+                <td data-label="Status"><span class="badge pending">PENDING</span></td>
+                <td data-label="Actions">
+                  <button class="action-button approve">Approve</button>
+                  <button class="action-button reject">Reject</button>
+                </td>
+                <td data-label="View"><button class="action-button view">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    &copy; 2025 intern.nation | All Rights Reserved
+  </footer>
+
+  <div id="logout-confirm" class="overlay">
+    <div class="confirm-box">
+      <h3>Are you sure you want to logout?</h3>
+      <div class="confirm-actions">
+        <a href="login.html" class="yes">✅ Yes, Logout</a>
+        <a href="#" class="no">✖ Cancel</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="profile-section" class="overlay">
+    <div class="confirm-box profile-card">
+      <a href="#!" class="close-btn" onclick="window.location.hash=''; return false;">✖</a>
+      <h3 class="profile-title">Profile</h3>
+      <div class="profile-content">
+        <img src="../assets/shipra.png" alt="Admin Profile">
+        <h2 class="profile-name">Shipra</h2>
+        <p class="profile-email">Email: Shipra@internnation.com</p>
+        <p class="profile-role">Role: Admin</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+     document.addEventListener("DOMContentLoaded", () => {
+      
+      const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
+
+     
+      if (!userInfo.email) {
+        alert("You must log in first!");
+        window.location.href = "../login.html";
+        return;
+      }
+
+      
+       const profileName = document.querySelector(".profile-name");
+      const profileEmail = document.querySelector(".profile-email");
+
+      if (profileName) profileName.textContent = userInfo.name || "Admin";
+      if (profileEmail) profileEmail.textContent = `Email: ${userInfo.email}`;
+
+  
+      const logoutBtn = document.getElementById("confirmLogout");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          localStorage.removeItem("userInfo");
+          alert("Logged out successfully!");
+          window.location.href = "../login.html";
+        });
+      }
+    });
+    document.addEventListener("DOMContentLoaded", () => {
+     
+      const savedTheme = localStorage.getItem("theme") || "light";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+
+
+      const savedStatuses = JSON.parse(localStorage.getItem("adminStatuses")) || {};
+      document.querySelectorAll("table tbody tr").forEach(row => {
+        const key = row.querySelector("td:first-child")?.textContent?.trim();
+        const badge = row.querySelector('[data-label="Status"] .badge');
+        if (key && savedStatuses[key] && badge) {
+          badge.textContent = savedStatuses[key].toUpperCase();
+          badge.className = savedStatuses[key] === "approved" ? "badge active" : "badge pending";
+        }
+      });
+
+      
+      const approveButtons = document.querySelectorAll(".action-button.approve");
+      const rejectButtons = document.querySelectorAll(".action-button.reject");
+
+      approveButtons.forEach(btn => btn.addEventListener("click", () => handleAction(btn, "approved")));
+      rejectButtons.forEach(btn => btn.addEventListener("click", () => handleAction(btn, "rejected")));
+
+      function handleAction(button, action) {
+        const row = button.closest("tr");
+        const badge = row.querySelector('[data-label="Status"] .badge');
+        const key = row.querySelector("td:first-child")?.textContent?.trim();
+        if (!badge || !key) return;
+
+        if (confirm(`Are you sure you want to ${action.toUpperCase()} this item?`)) {
+          badge.textContent = action.toUpperCase();
+          if (action === "approved") {
+            badge.className = "badge active";
+          } else if (action === "rejected") {
+            badge.className = "badge rejected";
+          } else {
+            badge.className = "badge pending";
+          }
+
+          savedStatuses[key] = action;
+          localStorage.setItem("adminStatuses", JSON.stringify(savedStatuses));
+          showToast(`Item ${action.toUpperCase()} successfully.`);
+        }
+      }
+
+
+     
+      document.querySelectorAll(".action-button.view").forEach(button => {
+        button.addEventListener("click", () => {
+          const section = button.closest("section");
+          let type = "";
+          if (section.id === "users") type = "user";
+          else if (section.id === "companies") type = "company";
+          else if (section.id === "jobs") type = "job";
+
+          const name = button.closest("tr").querySelector("td:first-child")?.textContent?.trim();
+          if (name && type) {
+            window.location.href = `Admin_viewdetails.html?type=${encodeURIComponent(type)}&name=${encodeURIComponent(name)}`;
+          }
+        });
+      });
+
+     
+      function showToast(message) {
+        const toast = document.createElement("div");
+        toast.textContent = message;
+        toast.style.position = "fixed";
+        toast.style.bottom = "25px";
+        toast.style.right = "25px";
+        toast.style.background = "var(--primary-color)";
+        toast.style.color = "#fff";
+        toast.style.padding = "10px 20px";
+        toast.style.borderRadius = "8px";
+        toast.style.boxShadow = "0 4px 8px rgba(0,0,0,0.2)";
+        toast.style.zIndex = "2000";
+        toast.style.opacity = "0";
+        toast.style.transition = "opacity 0.3s ease";
+        document.body.appendChild(toast);
+        setTimeout(() => (toast.style.opacity = "1"), 50);
+        setTimeout(() => {
+          toast.style.opacity = "0";
+          setTimeout(() => toast.remove(), 500);
+        }, 2500);
+      }
+    });
+  </script>
+
+</body>
+
+</html>

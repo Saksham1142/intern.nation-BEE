@@ -1,0 +1,160 @@
+:root {
+  --primary-color: #1F1F4E;  
+  --accent-color: #CBB88B;   
+  --background-color: #FFFFFF;
+  --text-color: #1F1F4E;
+  --hover-beige: rgb(232, 225, 208); 
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+
+header {
+  background-color: var(--primary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0.8rem 1.5rem;
+}
+
+header img {
+  height: 40px;
+  margin-right: 15px;
+}
+
+header h1 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+
+.dashboard-container {
+  display: flex;
+  min-height: calc(100vh - 60px);
+}
+
+.sidebar {
+  width: 250px;
+  background-color: var(--primary-color);
+  padding-top: 1rem;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.sidebar a {
+  display: block;
+  padding: 0.8rem 1.2rem;
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar a:hover, .sidebar a.active {
+  background-color: var(--accent-color);
+  color: var(--primary-color);
+}
+
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+}
+
+.main-content h2 {
+  margin-bottom: 1.2rem;
+  color: var(--primary-color);
+}
+
+.main-content p {
+  margin-bottom: 1.5rem;
+}
+
+
+.table-section {
+  margin-top: 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+table th, table td {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+table th {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+table tr:hover {
+  background-color: var(--hover-beige);
+}
+
+
+.status-badge {
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+  color: white;
+}
+
+.pending {
+  background-color: #f5b342;
+}
+
+.approved {
+  background-color: #4CAF50;
+}
+
+.rejected {
+  background-color: #E53935;
+}
+
+
+.action-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  margin-right: 5px;
+}
+
+.action-btn:hover {
+  background-color: var(--accent-color);
+  color: var(--primary-color);
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 0.9rem;
+}

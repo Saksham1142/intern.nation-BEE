@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Companies | intern.nation</title>
+  <link rel="stylesheet" href="../css/Admin_ManageCompanies.css">
+  <link rel="icon" type="jpeg" href="https://github.com/prbhleeen/intern.nation/blob/main/assets/logo.jpeg?raw=true">
+</head>
+
+<body>
+
+  <header>
+    <img src="https://github.com/prbhleeen/intern.nation/blob/main/assets/logo.jpeg?raw=true" alt="intern.nation Logo">
+    <h1>intern.nation - Manage Companies</h1>
+  </header>
+  <!-- ===== MAIN LAYOUT ===== -->
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <ul>
+        <li><a href="Admin_Dashboard.html">🏠 Dashboard</a></li>
+        <li><a href="Admin_Statistics.html">📊 View All Statistics</a></li>
+        <li><a href="Admin_ManageUsers.html">👥 Manage Users</a></li>
+        <li><a href="Admin_ManageCompanies.html">🏢 Manage Companies</a></li>
+        <li><a href="Admin_ViewSchedules.html" class="active-link">📅 View Schedules</a></li>
+        <li><a href="Admin_Settings.html">⚙ System Settings</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <section id="companies">
+        <h2>Pending Company Registrations</h2>
+
+        <div class="table-container">
+          <table class="companies-table">
+            <thead>
+              <tr>
+                <th>Company Name</th>
+                <th>Status</th>
+                <th>Actions</th>
+                <th></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td data-label="Company Name">InnovateTech Solutions</td>
+                <td data-label="Status"><span class="badge pending">PENDING</span></td>
+                <td data-label="Actions">
+                  <button class="action-button approve">Approve</button>
+                  <button class="action-button reject">Reject</button>
+                </td>
+                <td data-label="View"><button class="action-button view">View</button></td>
+              </tr>
+
+              <tr>
+                <td data-label="Company Name">Alpha Technologies</td>
+                <td data-label="Status"><span class="badge pending">PENDING</span></td>
+                <td data-label="Actions">
+                  <button class="action-button approve">Approve</button>
+                  <button class="action-button reject">Reject</button>
+                </td>
+                <td data-label="View"><button class="action-button view">View</button></td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    &copy; 2025 intern.nation | All Rights Reserved
+  </footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // Apply theme
+  const savedTheme = localStorage.getItem("theme") || "light";
+  document.documentElement.setAttribute("data-theme", savedTheme);
+
+  const savedStatuses = JSON.parse(localStorage.getItem("companyStatuses")) || {};
+
+  document.querySelectorAll("table tbody tr").forEach(row => {
+    const key = row.querySelector("td:first-child")?.textContent?.trim();
+    const badge = row.querySelector('[data-label="Status"] .badge');
+    const approveBtn = row.querySelector(".approve");
+    const rejectBtn = row.querySelector(".reject");
+
+    if (key && savedStatuses[key]) {
+      const status = savedStatuses[key];
+
+      badge.textContent = status.toUpperCase();
+      badge.className =
+        status === "approved" ? "badge active" :
+        status === "rejected" ? "badge rejected" :
+        "badge pending";
+
+      approveBtn.disabled = true;
+      rejectBtn.disabled = true;
+      approveBtn.style.opacity = "0.5";
+      rejectBtn.style.opacity = "0.5";
+    }
+  });
+
+  function handleAction(button, action) {
+    const row = button.closest("tr");
+    const key = row.querySelector("td:first-child")?.textContent?.trim();
+    const badge = row.querySelector('[data-label="Status"] .badge');
+
+    if (!key) return;
+
+    if (confirm(`Are you sure you want to ${action.toUpperCase()} this company?`)) {
+      badge.textContent = action.toUpperCase();
+      badge.className = action === "approved" ? "badge active" :
+                        action === "rejected" ? "badge rejected" : "badge pending";
+
+      savedStatuses[key] = action;
+      localStorage.setItem("companyStatuses", JSON.stringify(savedStatuses));
+
+      row.querySelector(".approve").disabled = true;
+      row.querySelector(".reject").disabled = true;
+
+      showToast(`Company ${action.toUpperCase()} successfully.`);
+    }
+  }
+
+  document.querySelectorAll(".approve").forEach(btn =>
+    btn.addEventListener("click", () => handleAction(btn, "approved"))
+  );
+
+  document.querySelectorAll(".reject").forEach(btn =>
+    btn.addEventListener("click", () => handleAction(btn, "rejected"))
+  );
+
+  document.querySelectorAll(".view").forEach(button => {
+    button.addEventListener("click", () => {
+      const name = button.closest("tr").querySelector("td:first-child")?.textContent?.trim();
+      const status = savedStatuses[name] || "pending";
+      window.location.href = `Admin_viewdetails.html?type=company&name=${encodeURIComponent(name)}&status=${encodeURIComponent(status)}`;
+    });
+  });
+
+  function showToast(message) {
+    const toast = document.createElement("div");
+    toast.textContent = message;
+    Object.assign(toast.style, {
+      position: "fixed",
+      bottom: "25px",
+      right: "25px",
+      background: "var(--primary-color)",
+      color: "#fff",
+      padding: "10px 20px",
+      borderRadius: "8px",
+      boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+      zIndex: "2000",
+      opacity: "0",
+      transition: "opacity 0.3s ease"
+    });
+
+    document.body.appendChild(toast);
+    setTimeout(() => toast.style.opacity = "1", 50);
+    setTimeout(() => {
+      toast.style.opacity = "0";
+      setTimeout(() => toast.remove(), 500);
+    }, 2500);
+  }
+
+});
+</script>
+
+</body>
+</html>

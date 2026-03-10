@@ -1,0 +1,274 @@
+:root {
+  --primary-color: #1F1F4E;  
+  --accent-color: #CBB88B;   
+  --hover-beige: rgb(232, 225, 208); 
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: 'Poppins', Arial, sans-serif;
+  color: white;
+  background-color: var(--primary-color);
+  overflow-x: hidden;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 40px;
+  background: transparent;
+}
+
+.logo img {
+  height: 50px;
+  width: auto;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: var(--accent-color);
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+nav ul li a:hover {
+  color: var(--hover-beige);
+}
+
+
+.contact-section {
+  text-align: center;
+  padding: 120px 40px 100px;
+}
+
+.contact-header h1 {
+  font-size: 3rem;
+  color: var(--accent-color);
+  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+}
+
+.contact-header p {
+  margin-top: 10px;
+  font-size: 1.1rem;
+  color: var(--hover-beige);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contact-cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-top: 60px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  border-radius: 15px;
+  padding: 30px 25px;
+  width: 300px;
+  color: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  transition: all 0.4s ease;
+  animation: fadeInUp 1s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 25px rgba(203, 184, 139, 0.5);
+  border: 1px solid var(--accent-color);
+}
+
+.icon {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.card h2 {
+  color: var(--accent-color);
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+
+.card p {
+  color: var(--hover-beige);
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.contact-link {
+  color: var(--accent-color);
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.contact-link:hover {
+  color: var(--hover-beige);
+  text-decoration: underline;
+}
+
+
+.contact-form-container {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  border-radius: 15px;
+  padding: 40px 30px;
+  width: 80%;
+  max-width: 600px;
+  margin: 80px auto;
+  text-align: center;
+  animation: fadeInUp 1s ease-in-out;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.contact-form-container h2 {
+  color: var(--accent-color);
+  margin-bottom: 10px;
+  font-size: 2rem;
+}
+
+.contact-form-container p {
+  color: var(--hover-beige);
+  margin-bottom: 25px;
+}
+
+.contact-form .form-group {
+  margin-bottom: 20px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  background: rgba(255,255,255,0.25);
+  box-shadow: 0 3px 15px rgba(203,184,139,0.5);
+}
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: var(--hover-beige);   
+  opacity: 1;                 
+}
+
+
+.contact-form textarea {
+  height: 130px;
+  resize: none;
+}
+
+.btn-submit {
+  background: var(--accent-color);
+  color: var(--primary-color);
+  font-weight: bold;
+  padding: 12px 25px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease-in-out;
+  font-size: 1rem;
+  box-shadow: 0 3px 15px rgba(203,184,139,0.4);
+}
+
+.btn-submit:hover {
+  background: var(--hover-beige);
+  transform: scale(1.05);
+}
+
+
+
+.socials {
+  margin-top: 70px;
+}
+
+.socials h3 {
+  font-size: 1.4rem;
+  color: var(--accent-color);
+  margin-bottom: 15px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.social-icon {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  padding: 15px;
+  color: var(--accent-color);
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.social-icon:hover {
+  background: var(--accent-color);
+  color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: transparent;
+  padding: 10px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+footer a {
+  color: var(--accent-color);
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

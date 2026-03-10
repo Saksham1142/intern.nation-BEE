@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Applicants | intern.nation</title>
+  <link rel="stylesheet" href="../css/viewapplicants.css">
+  <link rel="icon" type="jpeg" href="../assets/logo.jpeg">
+  <style>
+   
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      width: 400px;
+      max-width: 90%;
+      text-align: left;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .modal-content h3 {
+      color: var(--primary-color);
+      margin-top: 0;
+    }
+
+    .close-btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 0.4rem 0.8rem;
+      cursor: pointer;
+      float: right;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <img src="../assets/logo.jpeg" alt="intern.nation Logo">
+    <h1>intern.nation - View Applicants</h1>
+  </header>
+
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <ul>
+        <li><a href="companydashboard.html">🏠 Dashboard</a></li>
+        <li><a href="viewapplicants.html" class="active">📋 View Applicants</a></li>
+        <li><a href="interview.html">📅 Schedule Interview</a></li>
+        <li><a href="approveinterview.html">✅ Approve Interviews</a></li>
+        <li><a href="#">✉️ Notify Results</a></li>
+        <li><a href="#">➕ Post Job/Internship</a></li>
+        <li><a href="payments.html">💳 Payments and Subscription</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <h2>Applicants List</h2>
+      <div class="table-section">
+        <table id="applicantTable">
+          <thead>
+            <tr>
+              <th>Applicant ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Course</th>
+              <th>Skills</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    &copy; 2025 intern.nation | All Rights Reserved
+  </footer>
+
+
+  <div class="modal" id="applicantModal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">X</button>
+      <h3 id="modalName"></h3>
+      <p><strong>Email:</strong> <span id="modalEmail"></span></p>
+      <p><strong>Course:</strong> <span id="modalCourse"></span></p>
+      <p><strong>Skills:</strong> <span id="modalSkills"></span></p>
+      <p><strong>Status:</strong> <span id="modalStatus"></span></p>
+    </div>
+  </div>
+
+  <script>
+    
+    const applicants = [
+      { id: 101, name: "Aarav Sharma", email: "aarav@example.com", course: "B.Tech CSE", skills: "Java, React", status: "Pending" },
+      { id: 102, name: "Priya Singh", email: "priya@example.com", course: "B.Tech IT", skills: "Python, ML", status: "Shortlisted" },
+      { id: 103, name: "Rohan Mehta", email: "rohan@example.com", course: "MCA", skills: "C++, SQL", status: "Rejected" },
+      { id: 104, name: "Reva Kapoor", email: "reva@example.com", course: "BBA", skills: "Marketing, Communication", status: "Pending" }
+    ];
+
+   
+    const tableBody = document.querySelector("#applicantTable tbody");
+
+    function loadApplicants() {
+      applicants.forEach(applicant => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${applicant.id}</td>
+          <td>${applicant.name}</td>
+          <td>${applicant.email}</td>
+          <td>${applicant.course}</td>
+          <td>${applicant.skills}</td>
+          <td>${applicant.status}</td>
+          <td><button class="action-btn" onclick="viewApplicant(${applicant.id})">View</button></td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    
+    function viewApplicant(id) {
+      const applicant = applicants.find(a => a.id === id);
+      if (applicant) {
+        document.getElementById("modalName").textContent = applicant.name;
+        document.getElementById("modalEmail").textContent = applicant.email;
+        document.getElementById("modalCourse").textContent = applicant.course;
+        document.getElementById("modalSkills").textContent = applicant.skills;
+        document.getElementById("modalStatus").textContent = applicant.status;
+        document.getElementById("applicantModal").style.display = "flex";
+      }
+    }
+
+    function closeModal() {
+      document.getElementById("applicantModal").style.display = "none";
+    }
+
+    
+    loadApplicants();
+  </script>
+
+</body>
+</html>

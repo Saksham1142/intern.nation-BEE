@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings - Admin Dashboard</title>
+    <link rel="stylesheet" href="../css/Admin_Settings.css" />
+    <link rel="icon" type="jpeg" href="../assets/logo.jpeg">
+    <style>
+
+        * {
+            transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <img src="../assets/logo.jpeg" alt="Logo" />
+        <h1>Admin Settings</h1>
+    </header>
+
+    
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <ul>
+        <li><a href="Admin_Dashboard.html">🏠 Dashboard</a></li>
+        <li><a href="Admin_Statistics.html">📊 View All Statistics</a></li>
+        <li><a href="Admin_ManageUsers.html">👥 Manage Users</a></li>
+        <li><a href="Admin_ManageCompanies.html">🏢 Manage Companies</a></li>
+        <li><a href="Admin_ViewSchedules.html" class="active-link">📅 View Schedules</a></li>
+        <li><a href="Admin_Settings.html">⚙ System Settings</a></li>
+      </ul>
+    </aside>
+
+        <main class="main-content">
+            <h2>Settings</h2>
+
+            <form id="settingsForm">
+                <div class="card">
+                    <h3>General</h3>
+                    <div class="form-group">
+                        <label for="site-name">Site Name</label>
+                        <input type="text" id="site-name" name="site_name" value="intern.nation" />
+                    </div>
+                    <div class="form-group">
+                        <label for="admin-email">Admin Email</label>
+                        <input type="email" id="admin-email" name="admin_email" value="Shipra@example.com" />
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Security</h3>
+                    <div class="form-group">
+                        <label for="two-factor">Two-Factor Authentication</label>
+                        <div class="switch-container">
+                            <label class="switch">
+                                <input type="checkbox" id="two-factor" name="two_factor" checked />
+                                <span class="slider"></span>
+                            </label>
+                            <span>Enabled</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Notifications</h3>
+                    <div class="form-group">
+                        <label for="notification-email">Notification Email</label>
+                        <input type="email" id="notification-email" name="notification_email"
+                            value="notifications@example.com" />
+                    </div>
+                    <div class="form-group">
+                        <label for="receive-updates">Receive Updates</label>
+                        <div class="switch-container">
+                            <label class="switch">
+                                <input type="checkbox" id="receive-updates" name="receive_updates" checked />
+                                <span class="slider"></span>
+                            </label>
+                            <span>Enabled</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Appearance</h3>
+                    <div class="form-group">
+                        <label for="dark-mode">Dark / Light Mode</label>
+                        <div class="switch-container">
+                            <label class="switch">
+                                <input type="checkbox" id="dark-mode" name="dark_mode" />
+                                <span class="slider"></span>
+                            </label>
+                            <span id="mode-label">Light Mode</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="buttons">
+                    <button type="submit" class="save">Save Changes</button>
+                    <button type="reset" class="cancel">Cancel</button>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <footer>
+        © 2025 Admin Dashboard. All Rights Reserved.
+    </footer>
+
+    <script>
+        
+        document.getElementById("settingsForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            window.location.href = "Dashboard.html";
+        });
+
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedTheme = localStorage.getItem("theme") || "light";
+            document.documentElement.setAttribute("data-theme", savedTheme);
+
+            const darkModeSwitch = document.getElementById("dark-mode");
+            const label = document.getElementById("mode-label");
+
+            if (darkModeSwitch) {
+                darkModeSwitch.checked = savedTheme === "dark";
+                label.textContent = savedTheme === "dark" ? "Dark Mode" : "Light Mode";
+
+                darkModeSwitch.addEventListener("change", function () {
+                    const theme = this.checked ? "dark" : "light";
+                    document.documentElement.setAttribute("data-theme", theme);
+                    localStorage.setItem("theme", theme);
+                    label.textContent = theme === "dark" ? "Dark Mode" : "Light Mode";
+                });
+            }
+        });
+    </script>
+</body>
+</html>

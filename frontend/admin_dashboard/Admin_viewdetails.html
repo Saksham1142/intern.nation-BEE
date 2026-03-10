@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Company Details | intern.nation</title>
+  <link rel="icon" href="../assets/logo.jpeg" type="image/jpeg">
+  <link rel="stylesheet" href="../css/Admin_viewdetails.css">
+</head>
+<body>
+  <header>
+    <img src="../assets/logo.jpeg" alt="intern.nation logo" />
+    <h1>intern.nation — Company Details</h1>
+  </header>
+
+  <main>
+    <a href="Admin_Dashboard.html" class="back-arrow">⬅ Back to Dashboard</a>
+
+    <div class="details-card">
+      <h3>🏢 Company Details</h3>
+
+      <div class="detail-row">
+        <span class="label">Company Name</span>
+        <span class="value">TechVision Pvt. Ltd.</span>
+      </div>
+
+      <div class="detail-row">
+        <span class="label">Status</span>
+        <span class="value status pending" id="status">Pending ⚠️</span>
+      </div>
+
+      <div class="detail-row">
+        <span class="label">Industry</span>
+        <span class="value">Technology</span>
+      </div>
+
+      <div class="detail-row">
+        <span class="label">Email</span>
+        <span class="value">hr@techvision.com</span>
+      </div>
+
+      <div class="action-buttons">
+        <button class="approve-btn" id="approveBtn">Approve</button>
+        <button class="reject-btn" id="rejectBtn">Reject</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 intern.nation | All Rights Reserved
+  </footer>
+
+  <div id="toast"></div>
+
+  <script>
+    
+document.addEventListener("DOMContentLoaded", () => {
+  const savedTheme = localStorage.getItem("theme") || "light";
+  document.documentElement.setAttribute("data-theme", savedTheme);
+});
+
+    const approveBtn = document.getElementById("approveBtn");
+    const rejectBtn = document.getElementById("rejectBtn");
+    const status = document.getElementById("status");
+    const toast = document.getElementById("toast");
+
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2500);
+    }
+
+    approveBtn.onclick = () => {
+      status.textContent = "Approved ✅";
+      status.className = "value status approved";
+      showToast("✅ Company approved");
+    };
+
+    rejectBtn.onclick = () => {
+      status.textContent = "Rejected ❌";
+      status.className = "value status rejected";
+      showToast("❌ Company rejected");
+    };
+  </script>
+</body>
+</html>

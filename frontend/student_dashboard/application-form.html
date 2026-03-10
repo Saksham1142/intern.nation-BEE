@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Details | intern.nation</title>
+  <link rel="stylesheet" href="../css/student_dashboard.css">
+  <link rel="stylesheet" href="../css/application-form.css">
+  <link rel="icon" type="image/jpeg" href="../assets/logo.jpeg">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <h1 class="logo">
+        <img src="../assets/logo.jpeg" alt="Logo">
+        <span class="logo-text"><span>intern.</span><span>nation</span></span>
+    </h1>
+    <nav class="main-nav">
+        <ul>
+            <li><a href="student_dashboard.html">Back to Dashboard</a></li>
+            <li><a href="myprofile.html">My Profile</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section id="applicationForm" class="application-form">
+  <h3>Application Form</h3>
+  <form id="jobApplicationForm">
+    <div class="form-group">
+      <label for="fullName">Full Name</label>
+      <input type="text" id="fullName" name="fullName" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="10-digit number" required>
+    </div>
+
+    <div class="form-group">
+      <label for="year">Year of Study</label>
+      <select id="year" name="year" required>
+        <option value="">Select Year</option>
+        <option value="1">1st Year</option>
+        <option value="2">2nd Year</option>
+        <option value="3">3rd Year</option>
+        <option value="4">4th Year</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="department">Department</label>
+      <input type="text" id="department" name="department" placeholder="e.g., CSE, ECE, ME" required>
+    </div>
+
+    <div class="form-group">
+      <label for="cgpa">CGPA</label>
+      <input type="number" id="cgpa" name="cgpa" step="0.01" min="0" max="10" required>
+    </div>
+
+    <div class="form-group">
+      <label for="resume">Upload Resume</label>
+      <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required>
+    </div>
+
+    <div class="form-group">
+      <label for="coverLetter">Cover Letter</label>
+      <textarea id="coverLetter" name="coverLetter" rows="4"></textarea>
+    </div>
+
+    <button type="submit" class="submit-btn">Submit Application</button>
+  </form>
+</section>
+
+<footer>
+    <div class="map">
+        <iframe src="https://www.google.com/maps/embed?..."></iframe>
+    </div>
+    <div class="footer-links">
+        <p><b>Contact:</b> <a href="mailto:contact@intern.nation">contact@intern.nation</a></p>
+        <p><b>Support:</b> <a href="mailto:support@intern.nation">support@intern.nation</a></p>
+        <p><b>Our Address:</b> 302, 3rd Floor, Turing Block, Chitkara University, Punjab.</p>
+        <p><a href="../index.html">Home</a> | <a href="../about.html">About Us</a> | 
+           <a href="blogs.html">Blog</a> | <a href="../privacy.html">Privacy Policy</a> | 
+           <a href="../terms.html">Terms & Conditions</a></p>
+    </div>
+</footer>
+
+<script src="../js/application-form.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,131 @@
+:root {
+  --primary-color: #1F1F4E;  
+  --accent-color: #CBB88B;   
+  --background-color: #FFFFFF;
+  --text-color: #1F1F4E;
+  --hover-beige: rgb(232, 225, 208); 
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  font-family: Arial, sans-serif;
+  background-color: var(--primary-color);
+  color: var(--accent-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background: rgba(31, 31, 78, 0.9);
+}
+
+.logo img {
+  height: 50px;
+  width: auto;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: var(--accent-color);
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+  color: var(--hover-beige);
+}
+
+.about-section {
+  flex: 1;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.about-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.about-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: var(--accent-color);
+}
+
+.about-container h1 span {
+  color: var(--hover-beige);
+}
+
+.about-container p {
+  font-size: 1.1rem;
+  margin: 15px 0;
+  line-height: 1.6;
+  color: #f2f2f2;
+}
+
+.mission-vision {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 40px;
+  justify-content: center;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--accent-color);
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: var(--hover-beige);
+}
+
+.card p {
+  font-size: 1rem;
+  color: #e8e8e8;
+}
+
+
+footer {
+  background: rgba(31, 31, 78, 0.9);
+  padding: 12px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+footer a {
+  color: var(--accent-color);
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}

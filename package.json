@@ -1,0 +1,24 @@
+{
+  "name": "intern.nation-bee",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Saksham1142/intern.nation-BEE.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Saksham1142/intern.nation-BEE/issues"
+  },
+  "homepage": "https://github.com/Saksham1142/intern.nation-BEE#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

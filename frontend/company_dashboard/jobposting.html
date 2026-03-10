@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POST JOB/INTERNSHIP | intern.nation</title>
+  
+  <link rel="stylesheet" href="../css/jobposting.css"> 
+  
+  <link rel="icon" type="image/jpeg" href="../assets/logo.jpeg">
+</head>
+<body>
+  <header>
+    <img src="../assets/logo.jpeg" alt="intern.nation Logo">
+    <h1>intern.nation - Company Dashboard</h1>
+  </header>
+
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <ul>
+        <li><a href="companydashboard.html">🏠 Dashboard</a></li>
+        <li><a href="#profile-section">👤 Profile</a></li>
+        <li><a href="viewapplicants.html">📋 View Applicants</a></li>
+        <li><a href="interview.html">📅 Schedule Interview</a></li>
+        <li><a href="approveinterview.html">✅ Approve Interviews</a></li>
+        <li><a href="notifyresults.html">✉️ Notify Results</a></li>
+        <li><a href="jobposting.html" class="active">➕ Post Job/Internship</a></li>
+        <li><a href="payments.html">💳 Payments and Subscription</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <h2>➕ Post a New Job or Internship</h2>
+      <div class="job-post-form-container">
+        <form id="jobPostForm">
+          
+          <div class="form-group">
+            <label for="postType">Type of Post *</label>
+            <select id="postType" name="postType" required>
+              <option value="" disabled selected>Select Post Type</option>
+              <option value="Job">Full-Time Job</option>
+              <option value="Internship">Internship</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="jobTitle">Job Role / Title *</label>
+            <input type="text" id="jobTitle" name="jobTitle" required placeholder="e.g., Software Development Intern, Marketing Associate">
+          </div>
+          
+          <div class="form-group">
+            <label for="department">Department / Team *</label>
+            <input type="text" id="department" name="department" required placeholder="e.g., Engineering, Human Resources, Finance">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group half-width">
+              <label for="locationType">Location Type *</label>
+              <select id="locationType" name="locationType" required>
+                <option value="" disabled selected>Select Location Type</option>
+                <option value="Remote">Remote</option>
+                <option value="On-Site">On-Site</option>
+                <option value="Hybrid">Hybrid</option>
+              </select>
+            </div>
+            <div class="form-group half-width">
+              <label for="openings">Number of Openings *</label>
+              <input type="number" id="openings" name="openings" required min="1" placeholder="e.g., 5">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group half-width">
+              <label for="salary">Stipend / Salary (Per Month/Annum)</label>
+              <input type="text" id="salary" name="salary" placeholder="e.g., ₹25,000 / month, ₹5 LPA">
+            </div>
+            <div class="form-group half-width">
+              <label for="duration">Duration (for Internships/Contracts)</label>
+              <input type="text" id="duration" name="duration" placeholder="e.g., 6 months, 3 years, Permanent">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="description">Detailed Job Description *</label>
+            <textarea id="description" name="description" rows="6" required placeholder="Outline responsibilities, required qualifications, and company benefits."></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label for="skills">Required Skills (Comma Separated)</label>
+            <input type="text" id="skills" name="skills" placeholder="e.g., Python, Data Analysis, JavaScript, Communication">
+          </div>
+          
+          <div class="form-group">
+            <label for="deadline">Application Deadline *</label>
+            <input type="date" id="deadline" name="deadline" required>
+          </div>
+
+          <button type="submit" class="submit-btn">Publish Job Post</button>
+        </form>
+
+        <div id="postConfirmation" style="display: none;">
+            <span>✅ Job Posted Successfully!</span>
+            <button onclick="document.getElementById('postConfirmation').style.display='none';">OK</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    &copy; 2025 intern.nation | All Rights Reserved
+  </footer>
+
+  <div id="profile-section" class="overlay">
+    <div class="confirm-box profile-card">
+      <a href="#!" class="close-btn" onclick="window.location.hash=''; return false;">✖</a>
+      <h3 class="profile-title">Profile</h3>
+      <div class="profile-content">
+        <img src="logo.jpeg" alt="Company Profile"> 
+        <h2 class="profile-name" id="profileName">Company User</h2>
+        <p class="profile-email" id="profileEmail">Email: user@company.com</p>
+        <p class="profile-role">Role: Company HR</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/jobposting.js"></script>
+
+</body>
+</html>

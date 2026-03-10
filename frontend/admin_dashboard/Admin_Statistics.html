@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View All Statistics | intern.nation</title>
+  <link rel="stylesheet" href="../css/Admin_Dashboard.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="icon" type="jpeg" href="../assets/logo.jpeg">
+
+</head>
+
+<body>
+
+  <header>
+    <img src="../assets/logo.jpeg" alt="intern.nation Logo">
+    <h1>intern.nation - Admin Statistics</h1>
+  </header>
+
+
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <ul>
+        <li><a href="Admin_Dashboard.html">🏠 Dashboard</a></li>
+        <li><a href="Admin_Statistics.html">📊 View All Statistics</a></li>
+        <li><a href="Admin_ManageUsers.html">👥 Manage Users</a></li>
+        <li><a href="Admin_ManageCompanies.html">🏢 Manage Companies</a></li>
+        <li><a href="Admin_ViewSchedules.html" class="active-link">📅 View Schedules</a></li>
+        <li><a href="Admin_Settings.html">⚙ System Settings</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <section>
+        <h2>Platform Statistics Overview</h2>
+        <p style="color:var(--subtext-color); margin-bottom: 25px;">Track all key metrics for users, companies, and
+          applications in one place.</p>
+
+        <div class="stats">
+          <div class="stat-card">
+            <h3>540</h3>
+            <p>Registered Students</p>
+          </div>
+          <div class="stat-card">
+            <h3>85</h3>
+            <p>Active Companies</p>
+          </div>
+          <div class="stat-card">
+            <h3>320</h3>
+            <p>Total Applications</p>
+          </div>
+          <div class="stat-card">
+            <h3>25</h3>
+            <p>Pending Approvals</p>
+          </div>
+        </div>
+      </section>
+
+      <section style="margin-top:20px;">
+        <h3>📈 Applications Growth (Monthly)</h3>
+        <div class="table-container">
+          <canvas id="applicationsChart" height="60"></canvas>
+        </div>
+      </section>
+
+      <section style="margin-top:20px;">
+        <h3>📝 Job Approval Status</h3>
+        <div class="table-container">
+          <canvas id="jobStatusChart" height="60"></canvas>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    &copy; 2025 intern.nation | All Rights Reserved
+  </footer>
+
+  <div id="logout-confirm" class="overlay">
+    <div class="confirm-box">
+      <h3>Are you sure you want to logout?</h3>
+      <div class="confirm-actions">
+        <a href="login.html" class="yes">✅ Yes, Logout</a>
+        <a href="#" class="no">✖ Cancel</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+    // Restore saved theme
+    const savedTheme = localStorage.getItem("theme") || "light";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+
+    // Chart.js Colors
+    const primary = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim();
+    const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim();
+    const success = getComputedStyle(document.documentElement).getPropertyValue('--success-color').trim();
+    const pending = getComputedStyle(document.documentElement).getPropertyValue('--pending-color').trim();
+    const danger = getComputedStyle(document.documentElement).getPropertyValue('--danger-color').trim();
+
+    // Applications Growth Chart
+    new Chart(document.getElementById("applicationsChart"), {
+      type: "line",
+      data: {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"],
+        datasets: [{
+          label: "Applications",
+          data: [120, 150, 180, 210, 250, 290, 320, 350, 400, 540],
+          borderColor: primary,
+          backgroundColor: accent,
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { labels: { color: getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim() } } },
+        scales: {
+          x: { ticks: { color: getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim() } },
+          y: { ticks: { color: getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim() } }
+        }
+      }
+    });
+
+    // Job Status Chart
+    new Chart(document.getElementById("jobStatusChart"), {
+      type: "bar",
+      data: {
+        labels: ["Approved", "Pending", "Rejected"],
+        datasets: [{
+          label: "Job Posts",
+          data: [60, 25, 10],
+          backgroundColor: [success, pending, danger],
+        }]
+      },
+      options: {
+        plugins: { legend: { labels: { color: getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim() } } },
+        scales: {
+          x: { ticks: { color: getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim() } },
+          y: { ticks: { color: getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim() } }
+        }
+      }
+    });
+  </script>
+
+</body>
+
+</html>

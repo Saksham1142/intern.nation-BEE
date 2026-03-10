@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Approve Interviews | intern.nation</title>
+  <link rel="icon" type="jpeg" href="../assets/logo.jpeg" />
+  <link rel="stylesheet" href="../css/approveinterview.css" />
+</head>
+
+<body>
+  <header>
+    <img src="../assets/logo.jpeg" alt="intern.nation Logo" />
+    <h1>intern.nation - Approve Interviews</h1>
+  </header>
+
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <ul>
+        <li><a href="companydashboard.html">🏠 Dashboard</a></li>
+        <li><a href="viewapplicants.html">📋 View Applicants</a></li>
+        <li><a href="interview.html">📅 Schedule Interview</a></li>
+        <li><a href="approveinterview.html" class="active">✅ Approve Interviews</a></li>
+        <li><a href="notifyresults.html">✉️ Notify Results</a></li>
+        <li><a href="jobposting.html">➕ Post Job/Internship</a></li>
+        <li><a href="payments.html">💳 Payments and Subscription</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <h2>Pending Interviews for Approval</h2>
+      <p>Review scheduled interviews and approve or reject them.</p>
+
+      <div class="table-section">
+        <table id="interviewTable">
+          <thead>
+            <tr>
+              <th>Interview ID</th>
+              <th>Applicant Name</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Mode</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+           
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    &copy; 2025 intern.nation | All Rights Reserved
+  </footer>
+
+  
+  <script>
+    const interviewData = [
+      { id: 201, name: "Priya Singh", date: "2025-08-25", time: "10:00 AM", mode: "Online", status: "Pending" },
+      { id: 202, name: "Aarav Sharma", date: "2025-08-27", time: "11:30 AM", mode: "Offline", status: "Pending" },
+      { id: 203, name: "Reva Kapoor", date: "2025-08-29", time: "02:00 PM", mode: "Online", status: "Approved" },
+      { id: 204, name: "Rohan Mehta", date: "2025-09-01", time: "09:30 AM", mode: "Offline", status: "Pending" }
+    ];
+
+    function loadInterviews() {
+      const tbody = document.querySelector("#interviewTable tbody");
+      tbody.innerHTML = "";
+
+      interviewData.forEach(interview => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+          <td>${interview.id}</td>
+          <td>${interview.name}</td>
+          <td>${interview.date}</td>
+          <td>${interview.time}</td>
+          <td>${interview.mode}</td>
+          <td><span class="status-badge ${interview.status.toLowerCase()}">${interview.status}</span></td>
+          <td>
+            ${interview.status === "Pending" ? `
+              <button class="action-btn approve-btn" data-id="${interview.id}">Approve</button>
+              <button class="action-btn reject-btn" data-id="${interview.id}">Reject</button>
+            ` : "—"}
+          </td>
+        `;
+
+        tbody.appendChild(row);
+      });
+
+      addEventListeners();
+    }
+
+    function addEventListeners() {
+      document.querySelectorAll(".approve-btn").forEach(btn => {
+        btn.addEventListener("click", e => {
+          const id = e.target.getAttribute("data-id");
+          updateStatus(id, "Approved");
+        });
+      });
+
+      document.querySelectorAll(".reject-btn").forEach(btn => {
+        btn.addEventListener("click", e => {
+          const id = e.target.getAttribute("data-id");
+          updateStatus(id, "Rejected");
+        });
+      });
+    }
+
+    function updateStatus(id, newStatus) {
+      const interview = interviewData.find(i => i.id == id);
+      if (interview) {
+        interview.status = newStatus;
+        loadInterviews();
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadInterviews);
+  </script>
+</body>
+</html>

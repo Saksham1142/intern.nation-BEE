@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up | Intern.Nation</title>
+  <link rel="stylesheet" href="css/login.css">
+  <link rel="icon" href="assets/logo.jpeg">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    .forms .form {
+      display: none;
+    }
+
+    .forms .form.active {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="card">
+    <header class="logo-section">
+      <img src="assets/logo.jpeg" alt="Intern.Nation Logo" class="logo-img">
+      <div>
+        <h1 class="site-title">intern.nation</h1>
+        <p class="tagline">Connecting Talent with Opportunity</p>
+      </div>
+    </header>
+
+    <h2>Create Account</h2>
+
+    <div class="google-signin">
+      <div id="g_id_onload" data-client_id="YOUR_CLIENT_ID.apps.googleusercontent.com"
+        data-callback="handleCredentialResponse">
+      </div>
+      <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
+        data-text="continue_with" data-size="large" data-logo_alignment="left">
+      </div>
+    </div>
+    <hr style="margin: 1rem 0; border: none; border-top: 1px solid #ccc;">
+    <p style="margin: 0.5rem 0; color: #666; font-size: 0.9rem;">Or sign up with email</p>
+
+
+    <div class="role-selector">
+      <input type="radio" name="role" id="student-tab" checked>
+      <label for="student-tab">Student</label>
+
+      <input type="radio" name="role" id="company-tab">
+      <label for="company-tab">Company</label>
+    </div>
+
+    <div class="forms">
+
+      <form class="form" id="student" action="student_dashboard/student_dashboard.html" method="get">
+        <label>Full Name</label>
+        <input type="text" placeholder="Enter Name" required name="name">
+
+        <label>Email</label>
+        <input type="email" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" placeholder="Enter email" required name="email">
+
+        <label>Password</label>
+        <input type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}" placeholder="Enter password"
+          required name="password">
+
+        <label>Confirm Password</label>
+        <input type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}" placeholder="Confirm password"
+          required name="confirmPassword">
+
+        <label>Student ID</label>
+        <input type="text" pattern="[0-9]{10}" placeholder="Enter Student ID" required name="studentId">
+
+        <label>University/College</label>
+        <input type="text" placeholder="Enter your Institution Name" required name="college">
+
+        <label>Department</label>
+        <select name="department" required>
+          <option value="" disabled selected>Select your Department</option>
+          <option value="CSE">Computer Science and Engineering (CSE)</option>
+          <option value="ECE">Electronics and Communication Engineering (ECE)</option>
+          <option value="EEE">Electrical and Electronics Engineering (EEE)</option>
+          <option value="ME">Mechanical Engineering (ME)</option>
+          <option value="CE">Civil Engineering (CE)</option>
+          <option value="IT">Information Technology (IT)</option>
+          <option value="AIML">Artificial Intelligence & Machine Learning (AIML)</option>
+          <option value="DS">Data Science (DS)</option>
+          <option value="BBA">Business Administration (BBA)</option>
+          <option value="MBA">Master of Business Administration (MBA)</option>
+        </select>
+
+        <button type="submit">Create Account</button>
+        <p class="links"><a href="forgot_password.html">Forgot password?</a></p>
+        <p class="links">Already have an account? <a href="login.html">Sign In</a></p>
+      </form>
+
+
+      <form class="form" id="company" action="company_dashboard/companydashboard.html" method="get">
+        <label>Company Name</label>
+        <input type="text" placeholder="Enter company name" required name="companyName">
+
+        <label>Company Email</label>
+        <input type="email" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" placeholder="Enter company email" required
+          name="email">
+
+        <label>Password</label>
+        <input type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}" placeholder="Enter password"
+          required name="password">
+
+        <label>Confirm Password</label>
+        <input type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}" placeholder="Confirm password"
+          required name="confirmPassword">
+
+        <label>Company ID</label>
+        <input type="text" pattern="[0-9]{10}" placeholder="Enter company code" required name="companyId">
+
+<label>Industry Type</label>
+<select name="industry" required>
+  <option value="" disabled selected>Select Industry Type</option>
+  <option value="IT">Information Technology</option>
+  <option value="Software">Software Development</option>
+  <option value="Finance">Finance & Banking</option>
+  <option value="Healthcare">Healthcare</option>
+  <option value="Education">Education</option>
+  <option value="Manufacturing">Manufacturing</option>
+  <option value="Retail">Retail & E-commerce</option>
+  <option value="Telecom">Telecommunications</option>
+  <option value="Consulting">Consulting</option>
+  <option value="Media">Media & Entertainment</option>
+  <option value="Construction">Construction & Real Estate</option>
+  <option value="Automotive">Automotive</option>
+  <option value="Energy">Energy & Utilities</option>
+  <option value="Hospitality">Hospitality & Tourism</option>
+  <option value="Logistics">Logistics & Supply Chain</option>
+  <option value="Other">Other</option>
+</select>
+
+        <label>Location</label>
+        <input type="text" placeholder="Enter company location" required name="location">
+
+        <button type="submit">Create Account</button>
+        <p class="links"><a href="#">Forgot password?</a></p>
+        <p class="links">Already have an account? <a href="login.html">Sign In</a></p>
+      </form>
+    </div>
+  </section>
+
+<script src="js/signup.js"></script>
+</body>
+
+</html>

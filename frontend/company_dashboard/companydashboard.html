@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COMPANY DASHBOARD | intern.nation</title>
+  <link rel="stylesheet" href="../css/companydashboard.css">
+  <link rel="icon" type="jpeg" href="../assets/logo.jpeg">
+</head>
+<body>
+  <header>
+    <img src="../assets/logo.jpeg" alt="intern.nation Logo">
+    <h1>intern.nation - Company Dashboard</h1>
+  </header>
+
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <ul>
+        <li><a href="#profile-section">👤 Profile</a></li>
+        <li><a href="viewapplicants.html">📋 View Applicants</a></li>
+        <li><a href="interview.html">📅 Schedule Interview</a></li>
+        <li><a href="approveinterview.html">✅ Approve Interviews</a></li>
+        <li><a href="notifyresults.html">✉️ Notify Results</a></li>
+        <li><a href="jobposting.html">➕ Post Job/Internship</a></li>
+        <li><a href="payments.html">💳 Payments and Subscription</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <h2>Dashboard Overview</h2>
+      <div class="stats">
+        <div class="stat-card">
+          <h3>120</h3>
+          <p>Applications Received</p>
+        </div>
+        <div class="stat-card">
+          <h3>45</h3>
+          <p>Interviews Scheduled</p>
+        </div>
+        <div class="stat-card">
+          <h3>20</h3>
+          <p>Students Hired</p>
+        </div>
+        <div class="stat-card">
+          <h3>8</h3>
+          <p>Active Job Posts</p>
+        </div>
+      </div>
+
+      <div class="table-section">
+        <h3>Applicants</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Applicant ID</th>
+              <th>Name</th>
+              <th>Course</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>101</td><td>Aarav Sharma</td><td>B.Tech CSE</td><td>Pending</td></tr>
+            <tr><td>102</td><td>Priya Singh</td><td>B.Tech IT</td><td>Shortlisted</td></tr>
+            <tr><td>103</td><td>Rohan Mehta</td><td>MCA</td><td>Rejected</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Scheduled Interviews</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Interview ID</th>
+              <th>Applicant</th>
+              <th>Date</th>
+              <th>Mode</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>201</td><td>Priya Singh</td><td>25 Aug 2025</td><td>Online</td></tr>
+            <tr><td>202</td><td>Aarav Sharma</td><td>27 Aug 2025</td><td>Offline</td></tr>
+            <tr><td>203</td><td>Reva Kapoor</td><td>29 Aug 2025</td><td>Online</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Job Posts</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Job ID</th>
+              <th>Role</th>
+              <th>Department</th>
+              <th>Openings</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>301</td><td>Software Intern</td><td>Engineering</td><td>5</td></tr>
+            <tr><td>302</td><td>Marketing Associate</td><td>Marketing</td><td>3</td></tr>
+            <tr><td>303</td><td>HR Coordinator</td><td>Human Resources</td><td>2</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    &copy; 2025 intern.nation | All Rights Reserved
+  </footer>
+
+<script>
+   document.addEventListener("DOMContentLoaded", () => {
+      // ✅ Load user info
+      const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
+
+      // If not logged in, redirect to login page
+      if (!userInfo.email) {
+        alert("You must log in first!");
+        window.location.href = "../login.html";
+        return;
+      }
+
+      // ✅ Update profile info
+      const profileName = document.querySelector(".profile-name");
+      const profileEmail = document.querySelector(".profile-email");
+
+      if (profileName) profileName.textContent = userInfo.name || "Admin";
+      if (profileEmail) profileEmail.textContent = `Email: ${userInfo.email}`;
+
+      // ✅ Logout logic
+      const logoutBtn = document.getElementById("confirmLogout");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          localStorage.removeItem("userInfo");
+          alert("Logged out successfully!");
+          window.location.href = "../login.html";
+        });
+      }
+    });
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+  if (!userInfo || userInfo.role !== 'company') {
+    window.location.href = '../login.html';
+  }
+
+  // Add logout functionality
+  const header = document.querySelector('header');
+  const logoutLink = document.createElement('a');
+  logoutLink.href = '#';
+  logoutLink.textContent = 'Logout';
+  logoutLink.style.cssText = 'position: absolute; top: 10px; right: 10px; color: white; text-decoration: none;';
+  header.appendChild(logoutLink);
+  logoutLink.addEventListener('click', () => {
+    localStorage.removeItem('userInfo');
+    window.location.href = '../login.html';
+  });
+</script>
+
+<div id="profile-section" class="overlay">
+  <div class="confirm-box profile-card">
+    <a href="#!" class="close-btn" onclick="window.location.hash=''; return false;">✖</a>
+    <h3 class="profile-title">Profile</h3>
+    <div class="profile-content">
+      <img src="../assets/shagun.png" alt="Company Profile">
+      <h2 class="profile-name">Shagun</h2>
+      <p class="profile-email">Email: shagun@company.com</p>
+      <p class="profile-role">Role: Company HR</p>
+    </div>
+  </div>
+</div>
+
+
+
+</body>
+</html>
+

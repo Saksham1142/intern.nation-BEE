@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payments & Subscription | intern.nation</title>
+  <link rel="icon" type="jpeg" href="../assets/logo.jpeg">
+  <link rel="stylesheet" href="../css/payments.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-left">
+      <img src="../assets/logo.jpeg" alt="Logo">
+      <h1>intern.nation | Payments & Subscriptions</h1>
+    </div>
+  </header>
+
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <ul>
+        <li><a href="companydashboard.html">🏠 Dashboard Home</a></li>
+        <li><a href="#overview">💼 Overview</a></li>
+        <li><a href="#plans">📈 Subscription Plans</a></li>
+        <li><a href="#status">🧾 Active Subscription</a></li>
+        <li><a href="#history">📜 Payment History</a></li>
+        <li><a href="#methods">💳 Payment Methods</a></li>
+        <li><a href="#faqs">❓ FAQs</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main-content">
+
+      <section id="overview">
+        <h2>Payment & Subscription Overview</h2>
+        <p>Manage your plans, track your billing, and stay updated on your subscriptions with intern.nation’s payment panel.</p>
+      </section>
+
+      <section id="plans" class="plans-section">
+        <div class="plans-header">
+          <h2>Available Plans</h2>
+          <div class="toggle-container">
+            <span>Monthly</span>
+            <label class="switch">
+              <input type="checkbox" id="togglePlan">
+              <span class="slider round"></span>
+            </label>
+            <span>Yearly <small>(Save 20%)</small></span>
+          </div>
+        </div>
+
+        <div class="plans">
+          <div class="plan" id="basic-plan">
+            <h3>Basic</h3>
+            <p class="price" id="basic-price">₹499/month</p>
+            <ul>
+              <li>Up to 5 job posts</li>
+              <li>Basic analytics</li>
+              <li>Email support</li>
+            </ul>
+            <button class="subscribe-btn" onclick="subscribePlan('Basic')">Subscribe</button>
+          </div>
+
+          <div class="plan pro" id="pro-plan">
+            <h3>Pro</h3>
+            <p class="price" id="pro-price">₹799/month</p>
+            <ul>
+              <li>Up to 15 job posts</li>
+              <li>Priority analytics</li>
+              <li>Phone & Email support</li>
+              <li>Job highlights</li>
+            </ul>
+            <button class="subscribe-btn" onclick="subscribePlan('Pro')">Subscribe</button>
+          </div>
+
+          <div class="plan premium" id="premium-plan">
+            <h3>Premium</h3>
+            <p class="price" id="premium-price">₹999/month</p>
+            <ul>
+              <li>Unlimited job posts</li>
+              <li>Advanced analytics dashboard</li>
+              <li>Dedicated account manager</li>
+              <li>Featured listings</li>
+            </ul>
+            <button class="subscribe-btn" onclick="subscribePlan('Premium')">Subscribe</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="status" class="subscription-status">
+        <h2>🧾 Active Subscription</h2>
+        <div id="subscriptionStatus">
+          <p>No active subscription found.</p>
+        </div>
+      </section>
+
+      <section id="history" class="payment-history">
+        <h2>📜 Payment History</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Payment ID</th>
+              <th>Plan</th>
+              <th>Amount</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="paymentTableBody"></tbody>
+        </table>
+      </section>
+
+      <section id="methods" class="methods-section">
+        <h2>💳 Payment Methods</h2>
+        <p>Manage or update your preferred payment methods here. (Coming soon)</p>
+      </section>
+
+      <section id="faqs" class="faqs-section">
+        <h2>❓ FAQs</h2>
+        <p>Find answers to the most commonly asked questions. (Coming soon)</p>
+      </section>
+
+    </main>
+  </div>
+
+  <footer>
+    &copy; 2025 intern.nation | All Rights Reserved
+  </footer>
+
+  <script>
+    // === Basic JS ===
+
+    let isYearly = false;
+
+    // JSON for Payment History
+    let paymentHistory = [
+      { id: 101, plan: "Basic", amount: 499, date: "10 Oct 2025", status: "Paid" },
+      { id: 102, plan: "Premium", amount: 999, date: "22 Oct 2025", status: "Pending" }
+    ];
+
+    let currentSubscription = null;
+
+    // Plan prices (monthly/yearly)
+    const planPrices = {
+      Basic: { monthly: 499, yearly: 4790 },
+      Pro: { monthly: 799, yearly: 7670 },
+      Premium: { monthly: 999, yearly: 9590 }
+    };
+
+    // Display payment table
+    function displayPayments() {
+      const tableBody = document.getElementById('paymentTableBody');
+      tableBody.innerHTML = "";
+      for (let i = 0; i < paymentHistory.length; i++) {
+        const p = paymentHistory[i];
+        tableBody.innerHTML += `
+          <tr>
+            <td>${p.id}</td>
+            <td>${p.plan}</td>
+            <td>₹${p.amount}</td>
+            <td>${p.date}</td>
+            <td>${p.status}</td>
+          </tr>`;
+      }
+    }
+
+    // Subscribe plan
+    function subscribePlan(planType) {
+      const price = isYearly ? planPrices[planType].yearly : planPrices[planType].monthly;
+      const period = isYearly ? "Yearly" : "Monthly";
+
+      currentSubscription = {
+        plan: planType,
+        type: period,
+        startDate: new Date().toLocaleDateString(),
+        renewal: isYearly ? "Next Year" : "Next Month"
+      };
+
+      document.getElementById('subscriptionStatus').innerHTML = `
+        <p><strong>Plan:</strong> ${currentSubscription.plan}</p>
+        <p><strong>Type:</strong> ${currentSubscription.type}</p>
+        <p><strong>Start Date:</strong> ${currentSubscription.startDate}</p>
+        <p><strong>Renewal:</strong> ${currentSubscription.renewal}</p>
+        <p style="color:green;"><b>Your subscription is now active!</b></p>
+      `;
+
+      const newPayment = {
+        id: Math.floor(Math.random() * 900 + 100),
+        plan: planType,
+        amount: price,
+        date: new Date().toLocaleDateString(),
+        status: "Paid"
+      };
+      paymentHistory.push(newPayment);
+
+      displayPayments();
+    }
+
+    // Toggle monthly/yearly pricing
+    document.getElementById('togglePlan').addEventListener('change', function() {
+      isYearly = this.checked;
+
+      document.getElementById('basic-price').textContent = isYearly ? "₹4790/year" : "₹499/month";
+      document.getElementById('pro-price').textContent = isYearly ? "₹7670/year" : "₹799/month";
+      document.getElementById('premium-price').textContent = isYearly ? "₹9590/year" : "₹999/month";
+    });
+
+    displayPayments();
+  </script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>View Schedules | Admin Dashboard</title>
+  <link rel="stylesheet" href="../css/Admin_ViewSchedules.css" />
+  <link rel="icon" type="image/jpeg" href="https://github.com/prbhleeen/intern.nation/blob/main/assets/logo.jpeg?raw=true" />
+</head>
+
+<body>
+  <!-- ===== HEADER ===== -->
+  <header>
+    <img src="https://github.com/prbhleeen/intern.nation/blob/main/assets/logo.jpeg?raw=true" alt="intern.nation Logo" />
+    <h1>intern.nation - View Schedules</h1>
+  </header>
+
+  <!-- ===== MAIN LAYOUT ===== -->
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <ul>
+        <li><a href="Admin_Dashboard.html">🏠 Dashboard</a></li>
+        <li><a href="Admin_Statistics.html">📊 View All Statistics</a></li>
+        <li><a href="Admin_ManageUsers.html">👥 Manage Users</a></li>
+        <li><a href="Admin_ManageCompanies.html">🏢 Manage Companies</a></li>
+        <li><a href="Admin_ViewSchedules.html" class="active-link">📅 View Schedules</a></li>
+        <li><a href="Admin_Settings.html">⚙ System Settings</a></li>
+      </ul>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+      <section id="schedules">
+
+        <div class="header-row">
+          <h2>📅 Scheduled Interviews & Internships</h2>
+
+          <!-- FIXED SEARCH BAR -->
+          <div class="search-wrapper">
+            <input type="text" id="searchInput" placeholder="Search schedules...">
+            <span class="search-icon">🔍</span>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="schedules-table">
+            <thead>
+              <tr>
+                <th>Candidate</th>
+                <th>Company</th>
+                <th>Job Title</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+
+            <tbody id="scheduleTableBody">
+              <tr>
+                <td data-label="Candidate">Priya Sharma</td>
+                <td data-label="Company">Google</td>
+                <td data-label="Job Title">Frontend Developer Intern</td>
+                <td data-label="Date">2025-11-15</td>
+                <td data-label="Time">10:00 AM</td>
+                <td data-label="Status"><span class="badge pending">PENDING</span></td>
+                <td data-label="Actions">
+                  <button class="action-button mark-complete">Mark Completed</button>
+                  <button class="action-button cancel">Cancel</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td data-label="Candidate">Rohan Verma</td>
+                <td data-label="Company">Microsoft</td>
+                <td data-label="Job Title">Backend Developer Intern</td>
+                <td data-label="Date">2025-11-17</td>
+                <td data-label="Time">02:00 PM</td>
+                <td data-label="Status"><span class="badge active">CONFIRMED</span></td>
+                <td data-label="Actions">
+                  <button class="action-button mark-complete">Mark Completed</button>
+                  <button class="action-button cancel">Cancel</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td data-label="Candidate">Ananya Gupta</td>
+                <td data-label="Company">TCS</td>
+                <td data-label="Job Title">UI/UX Designer Intern</td>
+                <td data-label="Date">2025-11-20</td>
+                <td data-label="Time">11:30 AM</td>
+                <td data-label="Status"><span class="badge completed">COMPLETED</span></td>
+                <td data-label="Actions">
+                  <button class="action-button view">View</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+  <!-- ===== FOOTER (FIXED) ===== -->
+  <footer>
+    &copy; 2025 intern.nation | All Rights Reserved
+  </footer>
+
+  <!-- ===== LOGOUT CONFIRMATION OVERLAY ===== -->
+  <div id="logout-confirm" class="overlay">
+    <div class="confirm-box">
+      <h3>Are you sure you want to logout?</h3>
+      <div class="confirm-actions">
+        <a href="../login.html" class="yes">✅ Yes, Logout</a>
+        <a href="#" class="no">✖ Cancel</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    
+    // Restore saved theme
+    const savedTheme = localStorage.getItem("theme") || "light";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+    document.addEventListener("DOMContentLoaded", () => {
+      const savedStatuses = JSON.parse(localStorage.getItem("scheduleStatuses")) || {};
+
+      document.querySelectorAll("#scheduleTableBody tr").forEach((row) => {
+        const candidate = row.querySelector("td:first-child")?.textContent.trim();
+        const badge = row.querySelector(".badge");
+
+        if (savedStatuses[candidate]) {
+          updateBadge(badge, savedStatuses[candidate]);
+          const buttons = row.querySelectorAll(".mark-complete, .cancel");
+
+          if (["completed", "cancelled"].includes(savedStatuses[candidate])) {
+            buttons.forEach((btn) => btn.remove());
+          }
+        }
+      });
+
+      document.querySelectorAll(".mark-complete").forEach((btn) =>
+        btn.addEventListener("click", () => handleAction(btn, "completed"))
+      );
+
+      document.querySelectorAll(".cancel").forEach((btn) =>
+        btn.addEventListener("click", () => handleAction(btn, "cancelled"))
+      );
+
+      function handleAction(button, action) {
+        const row = button.closest("tr");
+        const candidate = row.querySelector("td:first-child")?.textContent.trim();
+        const badge = row.querySelector(".badge");
+
+        if (!candidate || !badge) return;
+
+        if (confirm(`Are you sure you want to mark this as ${action.toUpperCase()}?`)) {
+          savedStatuses[candidate] = action;
+          localStorage.setItem("scheduleStatuses", JSON.stringify(savedStatuses));
+          updateBadge(badge, action);
+          row.querySelectorAll(".mark-complete, .cancel").forEach((btn) => btn.remove());
+          showToast(`Schedule marked as ${action.toUpperCase()}.`);
+        }
+      }
+
+      function updateBadge(badge, status) {
+        badge.textContent = status.toUpperCase();
+        badge.className =
+          status === "completed"
+            ? "badge completed"
+            : status === "cancelled"
+            ? "badge cancelled"
+            : status === "pending"
+            ? "badge pending"
+            : "badge active";
+      }
+
+      const searchInput = document.getElementById("searchInput");
+      searchInput.addEventListener("keyup", () => {
+        const value = searchInput.value.toLowerCase();
+        document.querySelectorAll("#scheduleTableBody tr").forEach((row) => {
+          const text = row.textContent.toLowerCase();
+          row.style.display = text.includes(value) ? "" : "none";
+        });
+      });
+
+      function showToast(message) {
+        const toast = document.createElement("div");
+        toast.textContent = message;
+        toast.className = "toast";
+        document.body.appendChild(toast);
+
+        setTimeout(() => toast.classList.add("show"), 50);
+        setTimeout(() => {
+          toast.classList.remove("show");
+          setTimeout(() => toast.remove(), 400);
+        }, 2500);
+      }
+    });
+  </script>
+</body>
+</html>

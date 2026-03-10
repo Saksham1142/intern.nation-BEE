@@ -1,0 +1,509 @@
+body {
+  background-color: var(--hover-beige);
+}
+
+.profile-layout {
+  display: flex;
+  flex: 1;
+  padding: 50px 20px;
+  gap: 150px;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  height: fit-content;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar a{
+  text-decoration: none;
+  color: var(--text-color);
+}
+.sidebar li {
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.sidebar li:hover {
+  background: #f0f4ff;
+}
+
+.sidebar .active {
+  background: var(--primary-color);
+  color: #fff;
+  font-weight: 500;
+}
+
+.sidebar .active:hover{
+  background: var(--primary-color);
+  color: #fff;
+  font-weight: 500;
+}
+
+
+/* Profile Card */
+.profile-card {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  padding: 40px;
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+}
+
+.profile-header {
+  margin-bottom: 25px;
+}
+
+.profile-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out; 
+}
+
+.profile-img:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.profile-name {
+  margin-top: 15px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.profile-email {
+  color: #555;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Info list */
+.profile-info ul {
+  list-style: none;
+  text-align: left;
+  margin-top: 20px;
+}
+
+.profile-info li {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 15px;
+}
+
+/* Button */
+.update-btn {
+  margin-top: 25px;
+  padding: 12px 20px;
+  background: var(--accent-color);
+  color: black;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-weight: 600;
+}
+
+.update-btn:hover {
+  background: var(--hover-beige);
+}
+
+/* update details input fields */
+#yearInput,
+#cgpaInput,
+#resumeInput {
+  margin-left: 0.5rem;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#yearInput:focus,
+#cgpaInput:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 3px rgba(203, 184, 139, 0.5);
+  outline: none;
+}
+
+.edit-btn-container {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.save-btn,
+.cancel-btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.save-btn {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.cancel-btn {
+  background-color: #aaa;
+  color: white;
+}
+
+.save-btn:hover {
+  background-color: var(--accent-color);
+  color: var(--primary-color);
+}
+
+.cancel-btn:hover {
+  background-color: #888;
+}
+
+@media (max-width: 768px) {
+    
+  .profile-layout {
+    flex-direction: column; 
+    gap: 20px;
+    padding: 20px 10px;
+  }
+
+  .sidebar {
+    width: 100%;  
+    text-align: center;
+  }
+
+  .profile-card {
+    max-width: 100%;
+    padding: 25px;
+  }
+
+  .profile-name {
+    font-size: 20px;
+  }
+
+  .profile-email {
+    font-size: 13px;
+  }
+
+  .profile-info li {
+    font-size: 14px;
+  }
+
+  .update-btn {
+    width: 100%; 
+  }
+}
+
+
+
+
+
+
+/* Applications Section */
+.applications-section {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  padding: 30px;
+  flex: 1;              
+  max-width: 900px;
+}
+.applications-section h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  color: var(--primary-color);
+}
+
+.applications-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.applications-table th,
+.applications-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--border-color);
+  text-align: left;
+  font-size: 15px;
+}
+
+.applications-table th {
+  background: var(--light-gray);
+  font-weight: 600;
+}
+
+.status {
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.status.applied { background: #ffeeba; color: #856404; }
+.status.review { background: #b8daff; color: #004085; }
+.status.shortlisted { background: #d4edda; color: #155724; }
+.status.rejected { background: #f8d7da; color: #721c24; }
+.status.selected { background: #abe1b8; color: #155724; }
+.status.withdrawn{ color: red;   font-size: 13px; font-weight: bold; }
+.actions-withdrawn {color: red;   font-size: 13px; font-weight: bold; }
+
+.btn {
+  padding: 6px 12px;
+  font-size: 13px;
+  border:  none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-right: 6px;
+  transition: background 0.3s;
+}
+
+.view-btn {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.view-btn:hover {
+  background: #333366;
+}
+
+.withdraw-btn {
+  background: var(--danger-color);
+  color: #fff;
+}
+
+.withdraw-btn:hover {
+  background: #a71d2a;
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+  .applications-table thead {
+    display: none;
+  }
+
+  .applications-table tr {
+    display: block;
+    margin-bottom: 15px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  .applications-table td {
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    border: none;
+  }
+
+
+}
+
+
+.interview-schedule {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  padding: 30px;
+  flex: 1;              
+  max-width: 900px;
+}
+
+.interview-schedule h2 {
+  margin: 20px 0 10px;
+  font-size: 18px;
+  color: var(--primary-color);
+}
+
+.interview-table {
+  width: 100%;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.interview-table th,
+.interview-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.interview-table thead {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+
+/* Status colors */
+.status-passed {
+  color: green;
+  font-weight: bold;
+}
+.status-rejected {
+  color: red;
+  font-weight: bold;
+}
+
+
+
+
+@media (max-width: 600px) {
+  .interview-table,
+  .interview-table thead,
+  .interview-table tbody,
+  .interview-table th,
+  .interview-table td,
+  .interview-table tr {
+    display: block;
+  }
+
+  .interview-table thead tr {
+    display: none; /* hide header */
+  }
+
+  .interview-table tr {
+    margin-bottom: 15px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  .interview-table td {
+    text-align: center;
+    font-size: 14px;
+  }
+
+
+}
+
+/* Certifications Section */
+.content {
+  flex: 1;
+  max-width: 900px;
+}
+
+.content h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.certifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.certification-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.certification-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.certification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.certification-header h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin: 0;
+}
+
+.certification-status {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.certification-status.completed {
+  background: #d4edda;
+  color: #155724;
+}
+
+.certification-status.in-progress {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.certification-issuer,
+.certification-date,
+.certification-description {
+  margin: 8px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.certification-description {
+  line-height: 1.5;
+}
+
+.view-certificate-btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: var(--accent-color);
+  color: #000;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.view-certificate-btn:hover {
+  background: var(--hover-beige);
+}
+
+@media (max-width: 768px) {
+  .content {
+    max-width: 100%;
+  }
+
+  .certification-card {
+    padding: 20px;
+  }
+
+  .certification-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .certification-header h3 {
+    font-size: 18px;
+  }
+}

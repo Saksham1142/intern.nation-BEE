@@ -1,0 +1,117 @@
+body {
+    --font-family: 'Inter', sans-serif;
+
+}
+.job-details-container {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: #f6f9ff;
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+.job-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.company-logo-large {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    padding: 0.5rem;
+    background: var(--light-gray);
+}
+
+.job-header-info .job-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.job-header-info .company-name {
+    font-size: 1rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.salary {
+    font-size: 1.2rem;
+    font-weight: 600;
+    /* color: var(--accent-color); */
+}
+
+.job-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.job-info ul {
+    list-style: none;
+    padding: 0;
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+
+.job-info li strong {
+    color: var(--primary-color);
+}
+
+.job-action {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.apply-btn {
+    padding: 0.75rem 1.2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background: var(--primary-color);
+    color: var(--background-color);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    text-decoration: none;
+}
+
+.apply-btn:hover {
+    background: #2b2b6e; /* darker indigo */
+}
+
+
+@media (max-width: 767px) {
+    .job-details-container{
+        width: 80%;
+    }
+    .job-header-info .job-title{
+        font-size: 1.2rem;
+    }
+    .job-info h3 {
+    font-size: 1rem;
+    }
+    .job-info ul {
+        font-size: 0.95rem;
+    }
+    .apply-btn {
+        font-size: 1rem; 
+    }
+    .salary {
+    font-size: 1rem;
+    }
+
+    .company-logo-large {
+        width: 20%;
+        height: 20%;
+    }
+
+
+}

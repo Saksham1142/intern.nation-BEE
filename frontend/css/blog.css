@@ -1,0 +1,311 @@
+body {
+  background-color: #f7f4ed;
+}
+
+/* hero */
+.blog-hero {
+  background: url('../assets/tech-hero.jpeg') center/cover no-repeat;
+  height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  position: relative;
+}
+.blog-hero-text h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.blog-hero-text p {
+  font-size: 1.2rem;
+}
+
+/* blog grid */
+.blog-list {
+  max-width: 1200px;
+  margin: 2rem auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  padding: 0 1rem;
+}
+.blog-card {
+  background: var(--background-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.blog-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+.blog-card img {
+  width: 50%;
+  max-height: 150px;
+  object-fit: contain;
+  display: block;
+  margin: 20px auto 10px;
+}
+.blog-card-content {
+  padding: 0.8rem;
+}
+.blog-card-content h3 {
+  font-size: 1.1rem;
+  color: var(--primary-color);
+  margin-bottom: 0.4rem;
+}
+.blog-card-content p {
+  font-size: 0.8rem;
+  color: #555;
+  margin-bottom: 0.8rem;
+}
+.read-btn {
+  display: inline-block;
+  padding: 6px 12px;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+.read-btn:hover {
+  background: var(--accent-color);
+  color: var(--primary-color);
+}
+
+/* tags filter */
+.blog-tags-filter {
+  text-align: center;
+  margin: 2rem auto;
+}
+.blog-tags-filter button {
+  padding: 6px 14px;
+  margin: 4px;
+  border: none;
+  border-radius: 20px;
+  background: var(--hover-beige);
+  color: var(--primary-color);
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.blog-tags-filter button:hover {
+  background: var(--accent-color);
+}
+
+/* breadcrumb */
+.breadcrumb {
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  color: var(--text-color);
+}
+.breadcrumb a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+/* blog meta */
+.blog-meta {
+  font-size: 0.9rem;
+  color: gray;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+/* blog tags inside post */
+.blog-tags {
+  text-align: center;
+  margin-bottom: 25px;
+}
+.blog-tags span {
+  display: inline-block;
+  background: var(--hover-beige);
+  color: var(--primary-color);
+  padding: 5px 12px;
+  margin: 3px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+/* intro paragraph */
+.intro {
+  font-size: 1.2rem;
+  color: var(--primary-color);
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 30px;
+  background: var(--hover-beige);
+  padding: 15px;
+  border-radius: 6px;
+}
+
+/* blog container */
+.blog-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  font-family: var(--font-family);
+  line-height: 1.8;
+  background: var(--background-color);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+/* blog post content */
+.blog-post h1 {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  text-align: center;
+  border-bottom: 2px solid var(--accent-color);
+  padding-bottom: 10px;
+}
+.blog-post h2 {
+  margin-top: 30px;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  border-left: 4px solid var(--accent-color);
+  padding-left: 12px;
+}
+.blog-post p,
+.blog-post ul {
+  font-size: 1.05rem;
+  color: var(--text-color);
+  margin: 15px 0;
+}
+.blog-post ul {
+  padding-left: 20px;
+}
+
+/* blog images */
+.blog-img {
+  width: 100%;
+  max-width: 700px;
+  display: block;
+  margin: 25px auto;
+  border: 1px solid var(--border-color);
+}
+
+/* blog link */
+.blog-link-wrapper {
+  text-align: center;
+}
+.blog-link-wrapper a {
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: var(--primary-color);
+  color: var(--background-color);
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+.blog-link-wrapper a:hover {
+  background-color: var(--accent-color);
+  color: var(--primary-color);
+}
+
+/* author box */
+.author-box {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 40px;
+  padding: 20px;
+  border-top: 1px solid var(--border-color);
+  background: var(--light-gray);
+  border-radius: 8px;
+}
+.author-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.author-box h3 {
+  margin: 0;
+  color: var(--primary-color);
+}
+
+/* related blogs */
+.related-blogs {
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 40px 20px;
+  background: var(--light-gray);
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+.related-blogs h2 {
+  text-align: left;
+  color: var(--primary-color);
+  margin-bottom: 30px;
+  font-size: 1.8rem;
+}
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+}
+.related-card {
+  display: block;
+  background: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.related-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+.related-card img {
+  width: 50%;
+  max-height: 150px;
+  object-fit: contain;
+  display: block;
+  margin: 20px auto 10px;
+}
+.related-card h3 {
+  padding: 12px;
+  font-size: 1rem;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+/* responsive */
+@media (max-width: 768px) {
+  .blog-container {
+    padding: 20px;
+  }
+  .blog-post h1 {
+    font-size: 2rem;
+  }
+  .blog-post h2 {
+    font-size: 1.3rem;
+  }
+  .blog-post p,
+  .blog-post ul {
+    font-size: 1rem;
+  }
+  .related-blogs {
+    padding: 30px 15px;
+  }
+  .related-card h3 {
+    font-size: 0.95rem;
+  }
+}

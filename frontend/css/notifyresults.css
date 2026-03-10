@@ -1,0 +1,248 @@
+:root {
+  --primary-color: #1F1F4E;  
+  --accent-color: #CBB88B;   
+  --background-color: #FFFFFF;
+  --text-color: #1F1F4E;
+  --hover-beige: rgb(232, 225, 208); 
+  --selected: #4CAF50;
+  --rejected: #F44336;
+  --pending: #FF9800;
+}
+
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #F9F9FC;
+  color: var(--text-color);
+}
+
+header {
+  background-color: var(--primary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0.8rem 1.5rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+header img {
+  height: 40px;
+  margin-right: 15px;
+  border-radius: 6px;
+}
+
+/* ========== LAYOUT ========== */
+
+/* .dashboard-container {
+  display: flex;
+  min-height: calc(100vh - 60px);
+} */
+
+/* .sidebar {
+  width: 250px;
+  background-color: var(--primary-color);
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.sidebar a {
+  display: block;
+  padding: 0.8rem 1.2rem;
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.2s ease, padding-left 0.2s ease;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+  background-color: var(--accent-color);
+  color: var(--primary-color);
+  padding-left: 1.5rem;
+} */
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  background-color: #F9F9FC;
+}
+
+h2 {
+  color: var(--primary-color);
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  color: #666;
+  margin-bottom: 25px;
+  font-size: 15px;
+}
+
+
+.applicants-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.applicant-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  transition: 0.3s ease;
+}
+
+.applicant-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+.applicant-card img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.applicant-card h3 {
+  margin: 5px 0;
+  color: var(--primary-color);
+}
+
+.applicant-card p {
+  margin: 2px 0;
+  font-size: 14px;
+}
+
+
+.status-dropdown {
+  margin-top: 8px;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid var(--primary-color);
+  width: 100%;
+  cursor: pointer;
+}
+
+.status-dropdown.Selected {
+  background: rgba(76, 175, 80, 0.1);
+  border-color: var(--selected);
+  color: var(--selected);
+}
+
+.status-dropdown.Rejected {
+  background: rgba(244, 67, 54, 0.1);
+  border-color: var(--rejected);
+  color: var(--rejected);
+}
+
+.status-dropdown.Pending {
+  background: rgba(255, 152, 0, 0.1);
+  border-color: var(--pending);
+  color: var(--pending);
+}
+
+
+button.email-btn {
+  margin-top: 10px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.3s;
+}
+
+button.email-btn:hover {
+  background: var(--accent-color);
+  color: var(--primary-color);
+}
+
+.action-bar {
+  margin-top: 25px;
+  text-align: center;
+}
+
+#sendNotifications {
+  background: var(--accent-color);
+  color: var(--primary-color);
+  border: none;
+  padding: 12px 22px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#sendNotifications:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+
+.toast {
+  position: fixed;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent-color);
+  color: var(--primary-color);
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: bottom 0.5s ease;
+  z-index: 999;
+}
+
+.toast.show {
+  bottom: 30px;
+}
+
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 0.9rem;
+  letter-spacing: 0.3px;
+}
+
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .sidebar a {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .main-content {
+    padding: 1rem;
+  }
+}

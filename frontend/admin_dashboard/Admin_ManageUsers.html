@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Users | intern.nation Admin</title>
+  <link rel="stylesheet" href="../css/Admin_ManageUsers.css">
+  <link rel="icon" type="jpeg" href="https://github.com/prbhleeen/intern.nation/blob/main/assets/logo.jpeg?raw=true">
+</head>
+
+<body>
+
+  <header>
+    <img src="https://github.com/prbhleeen/intern.nation/blob/main/assets/logo.jpeg?raw=true" alt="intern.nation Logo">
+    <h1>intern.nation - Manage Users</h1>
+  </header>
+    
+   <!-- ===== MAIN LAYOUT ===== -->
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <ul>
+        <li><a href="Admin_Dashboard.html">🏠 Dashboard</a></li>
+        <li><a href="Admin_Statistics.html">📊 View All Statistics</a></li>
+        <li><a href="Admin_ManageUsers.html">👥 Manage Users</a></li>
+        <li><a href="Admin_ManageCompanies.html">🏢 Manage Companies</a></li>
+        <li><a href="Admin_ViewSchedules.html" class="active-link">📅 View Schedules</a></li>
+        <li><a href="Admin_Settings.html">⚙ System Settings</a></li>
+      </ul>
+    </aside>
+    <main class="main-content">
+
+      <section id="users">
+        <h2>Manage All Users</h2>
+
+        <div class="table-container">
+          <table class="users-table">
+            <thead>
+              <tr>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Actions</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="User Name">Priya Sharma</td>
+                <td data-label="Email">priya@example.com</td>
+                <td data-label="Role">Student</td>
+                <td data-label="Status"><span class="badge active">ACTIVE</span></td>
+                <td data-label="Actions">
+                  <button class="action-button approve">Approve</button>
+                  <button class="action-button reject">Reject</button>
+                </td>
+                <td data-label="View"><button class="action-button view">View</button></td>
+              </tr>
+              <tr>
+                <td data-label="User Name">Aditya Singh</td>
+                <td data-label="Email">aditya@example.com</td>
+                <td data-label="Role">Company HR</td>
+                <td data-label="Status"><span class="badge pending">PENDING</span></td>
+                <td data-label="Actions">
+                  <button class="action-button approve">Approve</button>
+                  <button class="action-button reject">Reject</button>
+                </td>
+                <td data-label="View"><button class="action-button view">View</button></td>
+              </tr>
+              <tr>
+                <td data-label="User Name">Riya Kapoor</td>
+                <td data-label="Email">riya@example.com</td>
+                <td data-label="Role">Student</td>
+                <td data-label="Status"><span class="badge pending">PENDING</span></td>
+                <td data-label="Actions">
+                  <button class="action-button approve">Approve</button>
+                  <button class="action-button reject">Reject</button>
+                </td>
+                <td data-label="View"><button class="action-button view">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    &copy; 2025 intern.nation | All Rights Reserved
+  </footer>
+
+  <div id="logout-confirm" class="overlay">
+    <div class="confirm-box">
+      <h3>Are you sure you want to logout?</h3>
+      <div class="confirm-actions">
+        <a href="login.html" class="yes">✅ Yes, Logout</a>
+        <a href="#" class="no">✖ Cancel</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const savedTheme = localStorage.getItem("theme") || "light";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+
+      // Load saved statuses
+      const savedStatuses = JSON.parse(localStorage.getItem("userStatuses")) || {};
+
+      document.querySelectorAll("table tbody tr").forEach(row => {
+        const key = row.querySelector("td:first-child")?.textContent?.trim();
+        const badge = row.querySelector('[data-label="Status"] .badge');
+        if (key && savedStatuses[key]) {
+          const status = savedStatuses[key];
+          badge.textContent = status.toUpperCase();
+          badge.className =
+            status === "approved" ? "badge active" :
+            status === "rejected" ? "badge rejected" :
+            "badge pending";
+
+          // Disable buttons if already acted upon
+          const actionButtons = row.querySelectorAll(".action-button.approve, .action-button.reject");
+          if (status === "approved" || status === "rejected") {
+            actionButtons.forEach(btn => {
+              btn.disabled = true;
+              btn.style.opacity = "0.5";
+              btn.style.cursor = "not-allowed";
+            });
+          }
+        }
+      });
+
+      // Handle approve/reject
+      document.querySelectorAll(".action-button.approve").forEach(btn =>
+        btn.addEventListener("click", () => handleAction(btn, "approved"))
+      );
+      document.querySelectorAll(".action-button.reject").forEach(btn =>
+        btn.addEventListener("click", () => handleAction(btn, "rejected"))
+      );
+
+      function handleAction(button, action) {
+        const row = button.closest("tr");
+        const badge = row.querySelector('[data-label="Status"] .badge');
+        const key = row.querySelector("td:first-child")?.textContent?.trim();
+        if (!badge || !key) return;
+
+        if (confirm(`Are you sure you want to ${action.toUpperCase()} this user?`)) {
+          badge.textContent = action.toUpperCase();
+          badge.className = action === "approved" ? "badge active" : "badge rejected";
+
+          savedStatuses[key] = action;
+          localStorage.setItem("userStatuses", JSON.stringify(savedStatuses));
+
+          // Disable buttons after action
+          const actionButtons = row.querySelectorAll(".action-button.approve, .action-button.reject");
+          actionButtons.forEach(btn => {
+            btn.disabled = true;
+            btn.style.opacity = "0.5";
+            btn.style.cursor = "not-allowed";
+          });
+
+          showToast(`User ${action.toUpperCase()} successfully.`);
+        }
+      }
+
+      // View button
+      document.querySelectorAll(".action-button.view").forEach(button => {
+        button.addEventListener("click", () => {
+          const name = button.closest("tr").querySelector("td:first-child")?.textContent?.trim();
+          if (name) {
+            window.location.href = `Admin_viewdetails.html?type=user&name=${encodeURIComponent(name)}`;
+          }
+        });
+      });
+
+      // Toast message
+      function showToast(message) {
+        const toast = document.createElement("div");
+        toast.textContent = message;
+        toast.style.position = "fixed";
+        toast.style.bottom = "25px";
+        toast.style.right = "25px";
+        toast.style.background = "var(--primary-color)";
+        toast.style.color = "#fff";
+        toast.style.padding = "10px 20px";
+        toast.style.borderRadius = "8px";
+        toast.style.boxShadow = "0 4px 8px rgba(0,0,0,0.2)";
+        toast.style.zIndex = "2000";
+        toast.style.opacity = "0";
+        toast.style.transition = "opacity 0.3s ease";
+        document.body.appendChild(toast);
+        setTimeout(() => (toast.style.opacity = "1"), 50);
+        setTimeout(() => {
+          toast.style.opacity = "0";
+          setTimeout(() => toast.remove(), 500);
+        }, 2500);
+      }
+    });
+  </script>
+
+</body>
+</html>

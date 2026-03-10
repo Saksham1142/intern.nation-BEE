@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schedule Interview | intern.nation</title>
+  <link rel="stylesheet" href="../css/interview.css">
+  <link rel="icon" type="jpeg" href="../assets/logo.jpeg">
+</head>
+<body>
+ 
+  <header>
+    <img src="../assets/logo.jpeg" alt="intern.nation Logo">
+    <h1>intern.nation - Schedule Interview</h1>
+  </header>
+
+
+  <div class="dashboard-container">
+
+    <aside class="sidebar">
+      <ul>
+        <li><a href="companydashboard.html">🏠 Dashboard</a></li>
+        <li><a href="viewapplicants.html">📋 View Applicants</a></li>
+        <li><a href="interview.html" class="active">📅 Schedule Interview</a></li>
+        <li><a href="approveinterview.html">✅ Approve Interviews</a></li>
+        <li><a href="notifyresults.html">✉️ Notify Results</a></li>
+        <li><a href="jobposting.html">➕ Post Job/Internship</a></li>
+        <li><a href="payments.html">💳 Payments and Subscription</a></li>
+      </ul>
+    </aside>
+
+ 
+    <main class="main-content">
+      <h2>Schedule an Interview</h2>
+
+      <div class="form-container">
+        <form>
+          <label for="applicant">Select Applicant:</label>
+          <select id="applicant" required>
+            <option value="">-- Select Applicant --</option>
+            <option value="101">Aarav Sharma (B.Tech CSE)</option>
+            <option value="102">Priya Singh (B.Tech IT)</option>
+            <option value="103">Rohan Mehta (MCA)</option>
+            <option value="104">Reva Kapoor (BBA)</option>
+          </select>
+
+          <label for="date">Interview Date:</label>
+          <input type="date" id="date" required>
+
+          <label for="time">Interview Time:</label>
+          <input type="time" id="time" required>
+
+          <label for="mode">Mode of Interview:</label>
+          <select id="mode" required>
+            <option value="">-- Select Mode --</option>
+            <option value="Online">Online</option>
+            <option value="Offline">Offline</option>
+          </select>
+
+          <label for="remarks">Remarks (optional):</label>
+          <textarea id="remarks" rows="4" placeholder="Enter any special notes..."></textarea>
+
+          <button type="submit" class="action-btn">Schedule</button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  
+  <footer>
+    &copy; 2025 intern.nation | All Rights Reserved
+  </footer>
+</body>
+</html>
