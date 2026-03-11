@@ -38,5 +38,18 @@
     "companyName": "TCS",
     "industry": "IT",
     "location": "Bangalore"
+  },
+  {
+    "id": 1773137473334,
+    "name": "Saksham Jain",
+    "email": "sakshamjain9350@gmail.com",
+    "password": "Sak@1142",
+    "role": "student",
+    "studentId": "1234567890",
+    "college": "chitkara university",
+    "department": "CSE",
+    "companyName": null,
+    "industry": null,
+    "location": null
   }
 ]
