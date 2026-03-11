@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Saksham1142/intern.nation-BEE#readme",
   "dependencies": {
+    "cors": "^2.8.6",
     "express": "^5.2.1"
   }
 }

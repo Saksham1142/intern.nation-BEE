@@ -1,18 +1,21 @@
 const express = require("express");
+const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
 
 const app = express();
-const PORT = 3000;
+const PORT = 5000;
+
 
 // =========================
 // Middleware
 // =========================
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Logger middleware
+// Logger
 app.use((req, res, next) => {
   console.log(`${req.method} request received for ${req.url}`);
   next();
@@ -21,6 +24,7 @@ app.use((req, res, next) => {
 // Serve frontend
 app.use(express.static(path.join(__dirname, "../frontend")));
 
+
 // =========================
 // File Paths
 // =========================
@@ -28,6 +32,10 @@ app.use(express.static(path.join(__dirname, "../frontend")));
 const usersFile = path.join(__dirname, "users.json");
 const internshipsFile = path.join(__dirname, "internships.json");
 const applicationsFile = path.join(__dirname, "applications.json");
+
+const settingsPath = path.join(__dirname, "settings.json");
+const dataPath = path.join(__dirname, "data.json");
+
 
 // =========================
 // Ensure JSON files exist
@@ -43,6 +51,7 @@ ensureFile(usersFile);
 ensureFile(internshipsFile);
 ensureFile(applicationsFile);
 
+
 // =========================
 // Helper Functions
 // =========================
@@ -56,10 +65,118 @@ function writeData(file, data) {
   fs.writeFileSync(file, JSON.stringify(data, null, 2));
 }
 
-// =========================
-// SIGNUP
-// =========================
 
+// =====================================================
+// SETTINGS API
+// =====================================================
+
+// GET SETTINGS
+app.get("/api/settings", (req, res) => {
+
+  fs.readFile(settingsPath, "utf8", (err, data) => {
+
+    if (err) {
+      return res.status(500).json({ error: "Cannot read settings file" });
+    }
+
+    res.json(JSON.parse(data));
+  });
+
+});
+
+// UPDATE SETTINGS
+app.put("/api/settings", (req, res) => {
+
+  const newSettings = req.body;
+
+  fs.writeFile(
+    settingsPath,
+    JSON.stringify(newSettings, null, 2),
+    (err) => {
+
+      if (err) {
+        return res.status(500).json({ error: "Cannot save settings" });
+      }
+
+      res.json({ message: "Settings updated successfully" });
+    }
+  );
+
+});
+
+
+// =====================================================
+// DASHBOARD DATA
+// =====================================================
+
+app.get("/api/data", (req, res) => {
+
+  fs.readFile(dataPath, "utf8", (err, data) => {
+
+    if (err) {
+      return res.status(500).json({ error: "Cannot read data file" });
+    }
+
+    res.json(JSON.parse(data));
+  });
+
+});
+
+
+// =====================================================
+// UPDATE STATUS (FIXED)
+// =====================================================
+
+app.patch("/api/update-status", (req, res) => {
+
+  const { entity, id, status } = req.body;
+
+  fs.readFile(dataPath, "utf8", (err, rawData) => {
+
+    if (err) {
+      return res.status(500).json({ error: "Cannot read data file" });
+    }
+
+    let data = JSON.parse(rawData);
+
+    const key = entity + "s";
+
+    if (!data[key]) {
+      return res.status(400).json({ error: "Invalid entity type" });
+    }
+
+    // FIX: convert id to number so it matches JSON ids
+    const index = data[key].findIndex(item => item.id === Number(id));
+
+    if (index === -1) {
+      return res.status(404).json({ error: "Item not found" });
+    }
+
+    data[key][index].status = status;
+
+    fs.writeFile(
+      dataPath,
+      JSON.stringify(data, null, 2),
+      (err) => {
+
+        if (err) {
+          return res.status(500).json({ error: "Cannot update data" });
+        }
+
+        res.json({ message: "Status updated successfully" });
+      }
+    );
+
+  });
+
+});
+
+
+// =====================================================
+// AUTHENTICATION
+// =====================================================
+
+// SIGNUP
 app.post("/signup", (req, res) => {
 
   const users = readData(usersFile);
@@ -110,10 +227,8 @@ app.post("/signup", (req, res) => {
 
 });
 
-// =========================
-// LOGIN
-// =========================
 
+// LOGIN
 app.post("/login", (req, res) => {
 
   const users = readData(usersFile);
@@ -138,10 +253,12 @@ app.post("/login", (req, res) => {
 
 });
 
-// =========================
-// POST INTERNSHIP
-// =========================
 
+// =====================================================
+// INTERNSHIPS
+// =====================================================
+
+// POST INTERNSHIP
 app.post("/post-internship", (req, res) => {
 
   const internships = readData(internshipsFile);
@@ -166,10 +283,8 @@ app.post("/post-internship", (req, res) => {
 
 });
 
-// =========================
-// VIEW INTERNSHIPS
-// =========================
 
+// VIEW INTERNSHIPS
 app.get("/internships", (req, res) => {
 
   const internships = readData(internshipsFile);
@@ -178,10 +293,8 @@ app.get("/internships", (req, res) => {
 
 });
 
-// =========================
-// APPLY INTERNSHIP
-// =========================
 
+// APPLY INTERNSHIP
 app.post("/apply", (req, res) => {
 
   const applications = readData(applicationsFile);
@@ -205,10 +318,8 @@ app.post("/apply", (req, res) => {
 
 });
 
-// =========================
-// VIEW APPLICATIONS
-// =========================
 
+// VIEW APPLICATIONS
 app.get("/applications", (req, res) => {
 
   const applications = readData(applicationsFile);
@@ -217,9 +328,10 @@ app.get("/applications", (req, res) => {
 
 });
 
-// =========================
+
+// =====================================================
 // ERROR HANDLING
-// =========================
+// =====================================================
 
 app.use((err, req, res, next) => {
 
@@ -231,9 +343,10 @@ app.use((err, req, res, next) => {
 
 });
 
-// =========================
+
+// =====================================================
 // START SERVER
-// =========================
+// =====================================================
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

@@ -14,19 +14,6 @@
     "role": "student"
   },
   {
-    "id": 1773132777114,
-    "name": "Shipra Arora",
-    "email": "shipra0770.becse24@chitkara.edu.in",
-    "password": "Shipra@123",
-    "role": "student",
-    "studentId": "2410990770",
-    "college": "Chitkara University",
-    "department": "CSE",
-    "companyName": null,
-    "industry": null,
-    "location": null
-  },
-  {
     "id": 1773132829589,
     "name": "TCS",
     "email": "tcs@gmail.com",
@@ -38,5 +25,44 @@
     "companyName": "TCS",
     "industry": "IT",
     "location": "Bangalore"
+  },
+  {
+    "id": 1773137724924,
+    "name": "shipra",
+    "email": "shipra0770.becse24@chitkara.edu.in",
+    "password": "Shipra@1234",
+    "role": "student",
+    "studentId": "2410990770",
+    "college": "abc",
+    "department": "CSE",
+    "companyName": null,
+    "industry": null,
+    "location": null
+  },
+  {
+    "id": 1773205446420,
+    "name": "Shreya Sharma",
+    "email": "shreya22@gmail.com",
+    "password": "Shreya@12",
+    "role": "student",
+    "studentId": "1234567890",
+    "college": "abc",
+    "department": "CSE",
+    "companyName": null,
+    "industry": null,
+    "location": null
+  },
+  {
+    "id": 1773206173872,
+    "name": "Suanina",
+    "email": "sunaina22@gmail.com",
+    "password": "Sunaina@123",
+    "role": "student",
+    "studentId": "1234567899",
+    "college": "abc",
+    "department": "CSE",
+    "companyName": null,
+    "industry": null,
+    "location": null
   }
 ]

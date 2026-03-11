@@ -1,86 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Company Details | intern.nation</title>
-  <link rel="icon" href="../assets/logo.jpeg" type="image/jpeg">
-  <link rel="stylesheet" href="../css/Admin_viewdetails.css">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>User Details | intern.nation</title>
+
+<link rel="icon" href="../assets/logo.jpeg">
+
+<link rel="stylesheet" href="../css/Admin_viewdetails.css">
+
 </head>
+
 <body>
-  <header>
-    <img src="../assets/logo.jpeg" alt="intern.nation logo" />
-    <h1>intern.nation — Company Details</h1>
-  </header>
 
-  <main>
-    <a href="Admin_Dashboard.html" class="back-arrow">⬅ Back to Dashboard</a>
+<header>
 
-    <div class="details-card">
-      <h3>🏢 Company Details</h3>
+<img src="../assets/logo.jpeg">
 
-      <div class="detail-row">
-        <span class="label">Company Name</span>
-        <span class="value">TechVision Pvt. Ltd.</span>
-      </div>
+<h1>intern.nation — User Details</h1>
 
-      <div class="detail-row">
-        <span class="label">Status</span>
-        <span class="value status pending" id="status">Pending ⚠️</span>
-      </div>
+</header>
 
-      <div class="detail-row">
-        <span class="label">Industry</span>
-        <span class="value">Technology</span>
-      </div>
 
-      <div class="detail-row">
-        <span class="label">Email</span>
-        <span class="value">hr@techvision.com</span>
-      </div>
+<main>
 
-      <div class="action-buttons">
-        <button class="approve-btn" id="approveBtn">Approve</button>
-        <button class="reject-btn" id="rejectBtn">Reject</button>
-      </div>
-    </div>
-  </main>
+<div class="details-card">
 
-  <footer>
-    &copy; 2025 intern.nation | All Rights Reserved
-  </footer>
+<h3>👤 User Details</h3>
 
-  <div id="toast"></div>
+<div class="detail-row">
+<span class="label">Name</span>
+<span class="value" id="name"></span>
+</div>
 
-  <script>
-    
-document.addEventListener("DOMContentLoaded", () => {
-  const savedTheme = localStorage.getItem("theme") || "light";
-  document.documentElement.setAttribute("data-theme", savedTheme);
+<div class="detail-row">
+<span class="label">Email</span>
+<span class="value" id="email"></span>
+</div>
+
+<div class="detail-row">
+<span class="label">Status</span>
+<span class="value status pending" id="status"></span>
+</div>
+
+<div class="action-buttons">
+
+<button class="approve-btn" id="approveBtn">
+Approve
+</button>
+
+<button class="reject-btn" id="rejectBtn">
+Reject
+</button>
+
+</div>
+
+</div>
+
+</main>
+
+
+<footer>
+© 2025 intern.nation | All Rights Reserved
+</footer>
+
+<script>
+
+const urlParams = new URLSearchParams(window.location.search);
+const userId = urlParams.get("id");
+
+const approveBtn = document.getElementById("approveBtn");
+const rejectBtn = document.getElementById("rejectBtn");
+
+const name = document.getElementById("name");
+const email = document.getElementById("email");
+const status = document.getElementById("status");
+
+
+/* =========================
+LOAD USER
+========================= */
+
+async function loadUser(){
+
+try{
+
+const res = await fetch("http://localhost:5000/api/data");
+const data = await res.json();
+
+const user = data.students.find(u => u.id == userId);
+
+if(!user){
+alert("User not found");
+return;
+}
+
+name.textContent = user.name;
+email.textContent = user.email;
+
+updateStatusUI(user.status || "pending");
+
+}
+
+catch(error){
+console.error("Error loading user:", error);
+}
+
+}
+
+
+/* =========================
+UPDATE STATUS UI
+========================= */
+
+function updateStatusUI(currentStatus){
+
+status.textContent = currentStatus.toUpperCase();
+
+if(currentStatus === "approved"){
+
+status.className = "value status approved";
+approveBtn.disabled = true;
+rejectBtn.disabled = true;
+
+}
+
+else if(currentStatus === "rejected"){
+
+status.className = "value status rejected";
+approveBtn.disabled = true;
+rejectBtn.disabled = true;
+
+}
+
+else{
+
+status.className = "value status pending";
+approveBtn.disabled = false;
+rejectBtn.disabled = false;
+
+}
+
+}
+
+
+/* =========================
+UPDATE STATUS IN BACKEND
+========================= */
+
+async function updateStatus(newStatus){
+
+try{
+
+const response = await fetch("http://localhost:5000/api/update-status",{
+
+method:"PATCH",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+entity:"student",
+id:userId,
+status:newStatus
+})
+
 });
 
-    const approveBtn = document.getElementById("approveBtn");
-    const rejectBtn = document.getElementById("rejectBtn");
-    const status = document.getElementById("status");
-    const toast = document.getElementById("toast");
+if(!response.ok){
+throw new Error("Failed to update status");
+}
 
-    function showToast(msg) {
-      toast.textContent = msg;
-      toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 2500);
-    }
+alert("Status Updated Successfully");
 
-    approveBtn.onclick = () => {
-      status.textContent = "Approved ✅";
-      status.className = "value status approved";
-      showToast("✅ Company approved");
-    };
+// reload fresh data from backend
+await loadUser();
 
-    rejectBtn.onclick = () => {
-      status.textContent = "Rejected ❌";
-      status.className = "value status rejected";
-      showToast("❌ Company rejected");
-    };
-  </script>
+}
+
+catch(error){
+
+console.error("Error updating status:", error);
+
+}
+
+}
+
+
+/* =========================
+BUTTON EVENTS
+========================= */
+
+approveBtn.addEventListener("click", () => {
+updateStatus("approved");
+});
+
+rejectBtn.addEventListener("click", () => {
+updateStatus("rejected");
+});
+
+
+/* =========================
+INITIAL LOAD
+========================= */
+
+loadUser();
+
+</script>
+
 </body>
 </html>
