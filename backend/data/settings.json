@@ -4,5 +4,5 @@
   "two_factor": true,
   "notification_email": "notification@example.com",
   "receive_updates": true,
-  "dark_mode": false
+  "dark_mode": true
 }
