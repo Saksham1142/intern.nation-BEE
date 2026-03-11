@@ -20,13 +20,14 @@ exports.signup = (req, res) => {
     studentId,
     college,
     department,
+    companyId,
     companyName,
     industry,
     location
   } = req.body;
 
-  if (!name || !email || !password || !role) {
-    throw new AppError("Name, email, password, and role are required", 400);
+  if (!email || !password || !role) {
+    throw new AppError("Email, password, and role are required", 400);
   }
 
   if (role !== "student" && role !== "company") {
@@ -46,6 +47,10 @@ exports.signup = (req, res) => {
   let newUser;
 
   if(role === "student"){
+    if (!name) {
+      throw new AppError("Name is required", 400);
+    }
+
     if (!studentId || !college || !department) {
       throw new AppError("Student ID, college, and department are required", 400);
     }
@@ -64,16 +69,17 @@ exports.signup = (req, res) => {
   }
 
   else if(role === "company"){
-    if (!companyName || !industry || !location) {
-      throw new AppError("Company name, industry, and location are required", 400);
+    if (!companyName || !companyId || !industry || !location) {
+      throw new AppError("Company name, company ID, industry, and location are required", 400);
     }
 
     newUser = {
       id: Date.now(),
-      name,
+      name: companyName,
       email,
       password,
       role,
+      companyId,
       companyName,
       industry,
       location
@@ -101,7 +107,7 @@ exports.signup = (req, res) => {
 exports.login = (req, res) => {
   const users = readData(usersFile);
 
-  const { email, password, role, adminId, studentId } = req.body;
+  const { email, password, role, adminId, studentId, companyId } = req.body;
 
   if (!email || !password || !role) {
     throw new AppError("Email, password, and role are required", 400);
@@ -139,7 +145,8 @@ exports.login = (req, res) => {
       u =>
       u.email === email &&
       u.password === password &&
-      u.role === "company"
+      u.role === "company" &&
+      String(u.companyId) === String(companyId)
     );
 
   }
@@ -151,7 +158,7 @@ exports.login = (req, res) => {
   res.json({
     message:"Login successful",
     role:user.role,
-    name:user.name,
+    name:user.companyName || user.name,
     companyName:user.companyName || "",
     email:user.email
   });

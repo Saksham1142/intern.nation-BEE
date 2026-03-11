@@ -16,5 +16,37 @@
     "studentId": "2410990742",
     "college": "Chitkara University",
     "department": "CSE"
+  },
+  {
+    "id": 1773261179970,
+    "name": "Acme Labs",
+    "email": "acme@example.com",
+    "password": "Acme@123",
+    "role": "company",
+    "companyId": "1234567891",
+    "companyName": "Acme Labs",
+    "industry": "IT",
+    "location": "Delhi"
+  },
+  {
+    "id": 1773261226547,
+    "name": "SJ steels",
+    "email": "sakshamjain9350@gmail.com",
+    "password": "Sak@1142",
+    "role": "company",
+    "companyId": "1234567895",
+    "companyName": "SJ steels",
+    "industry": "Retail",
+    "location": "Chandigarh"
+  },
+  {
+    "id": 1773261494091,
+    "name": "Saksham Jain",
+    "email": "Sak@gmail.com",
+    "password": "Sak@1142",
+    "role": "student",
+    "studentId": "1234567895",
+    "college": "chitkara university",
+    "department": "CSE"
   }
 ]

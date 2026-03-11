@@ -16,5 +16,21 @@
     ],
     "deadline": "2026-04-15",
     "duration": "3 months"
+  },
+  {
+    "id": 1773261357698,
+    "title": "SDE",
+    "company": "SJ steels",
+    "location": "Hybrid",
+    "stipend": "15,000",
+    "type": "Internship",
+    "department": "CSE",
+    "openings": 5,
+    "description": "8.5 cgpa plus are only eligible .\nPPO- 12 lakh",
+    "skills": [
+      "JAVA"
+    ],
+    "deadline": "2026-04-01",
+    "duration": "6 months"
   }
 ]
