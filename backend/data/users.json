@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Admin",
+    "email": "admin@gmail.com",
+    "password": "Admin@123",
+    "role": "admin",
+    "adminId": "1234567890"
+  },
+  {
+    "id": 1773239770610,
+    "name": "Prabhleen Kaur",
+    "email": "prabhleen0742.becse24@chitkara.edu.in",
+    "password": "Prabh@123",
+    "role": "student",
+    "studentId": "2410990742",
+    "college": "Chitkara University",
+    "department": "CSE"
+  }
+]

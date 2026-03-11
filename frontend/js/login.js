@@ -1,175 +1,121 @@
-// =========================
-// Role Form Switch
-// =========================
+// ========================
+// ROLE TAB SWITCHING
+// ========================
 
-const forms = document.querySelectorAll(".form");
-const radios = document.querySelectorAll("input[name='role']");
+const studentTab = document.getElementById("student-tab");
+const adminTab = document.getElementById("admin-tab");
+const companyTab = document.getElementById("company-tab");
 
-function showForm(role) {
+const studentForm = document.getElementById("student");
+const adminForm = document.getElementById("admin");
+const companyForm = document.getElementById("company");
 
-  forms.forEach(f => f.style.display = "none");
+function showForm(role){
 
-  document.getElementById(role).style.display = "block";
+  studentForm.style.display = "none";
+  adminForm.style.display = "none";
+  companyForm.style.display = "none";
+
+  if(role === "student") studentForm.style.display = "block";
+  if(role === "admin") adminForm.style.display = "block";
+  if(role === "company") companyForm.style.display = "block";
 
 }
 
-radios.forEach(radio => {
-
-  radio.addEventListener("change", () => {
-
-    if (radio.id === "student-tab") showForm("student");
-
-    if (radio.id === "company-tab") showForm("company");
-
-    if (radio.id === "admin-tab") showForm("admin");
-
-  });
-
-});
-
+// default form
 showForm("student");
 
+studentTab.addEventListener("change", () => showForm("student"));
+adminTab.addEventListener("change", () => showForm("admin"));
+companyTab.addEventListener("change", () => showForm("company"));
 
-// =========================
-// LOGIN FUNCTION
-// =========================
 
-function processForm(id) {
 
-  document.getElementById(id).addEventListener("submit", async function (e) {
+// ========================
+// LOGIN LOGIC
+// ========================
+
+document.querySelectorAll(".form").forEach(form => {
+
+  form.addEventListener("submit", async function(e){
 
     e.preventDefault();
 
-    const formData = new FormData(e.target);
+    const role = this.id;
 
-    const data = {
-      email: formData.get("email"),
-      password: formData.get("password")
+    const email = this.querySelector('input[name="email"]').value.trim();
+    const password = this.querySelector('input[name="password"]').value.trim();
+
+    let data = {
+      email,
+      password,
+      role
     };
 
-    try {
+    // add role-specific IDs
 
-      const res = await fetch("http://localhost:5000/login", {
+    if(role === "student"){
+      data.studentId = this.querySelector('input[name="studentId"]').value.trim();
+    }
 
-        method: "POST",
+    if(role === "company"){
+      data.companyId = this.querySelector('input[name="companyId"]').value.trim();
+    }
 
-        headers: {
-          "Content-Type": "application/json"
+    if(role === "admin"){
+      data.adminId = this.querySelector('input[name="adminId"]').value.trim();
+    }
+
+    try{
+
+      const res = await fetch("http://localhost:5000/login",{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
         },
-
-        body: JSON.stringify(data)
-
+        body:JSON.stringify(data)
       });
 
       const result = await res.json();
 
-      if (!res.ok) {
-
+      if(!res.ok){
         alert(result.message);
-
         return;
-
       }
 
-      localStorage.setItem("userInfo", JSON.stringify(result));
+      // ========================
+      // STORE LOGIN SESSION
+      // ========================
 
-      alert("Login successful");
+      localStorage.setItem("userInfo", JSON.stringify({
+        name: result.name,
+        email: email,
+        role: result.role
+      }));
 
-      if (result.role === "student") {
 
+      // ========================
+      // REDIRECT BASED ON ROLE
+      // ========================
+
+      if(result.role === "student"){
         window.location.href = "student_dashboard/student_dashboard.html";
-
       }
 
-      if (result.role === "company") {
-
+      if(result.role === "company"){
         window.location.href = "company_dashboard/companydashboard.html";
-
       }
 
-      if (result.role === "admin") {
-
+      if(result.role === "admin"){
         window.location.href = "admin_dashboard/Admin_Dashboard.html";
-
       }
 
-    } catch (err) {
-
+    }
+    catch(err){
       console.error(err);
-
       alert("Login failed");
-
     }
 
   });
 
-}
-
-
-// activate forms
-
-processForm("student");
-processForm("company");
-processForm("admin");
-
-
-// =========================
-// GOOGLE LOGIN
-// =========================
-
-function handleCredentialResponse(response) {
-
-  try {
-
-    const payload = decodeJwt(response.credential);
-
-    const userInfo = {
-      name: payload.name,
-      email: payload.email,
-      picture: payload.picture,
-      id: payload.sub,
-      authProvider: "google"
-    };
-
-    localStorage.setItem("userInfo", JSON.stringify(userInfo));
-
-    window.location.href = "student_dashboard/student_dashboard.html";
-
-  }
-
-  catch (err) {
-
-    console.error("Google Sign-in Error:", err);
-
-    document.getElementById("google-error").style.display = "block";
-
-  }
-
-}
-
-
-// =========================
-// JWT Decode
-// =========================
-
-function decodeJwt(token) {
-
-  const base64Url = token.split('.')[1];
-
-  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-
-  const jsonPayload = decodeURIComponent(
-
-    atob(base64)
-
-      .split("")
-
-      .map(c => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-
-      .join("")
-
-  );
-
-  return JSON.parse(jsonPayload);
-
-}
+});
