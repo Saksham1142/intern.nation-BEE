@@ -10,6 +10,9 @@
     "resume": "PrabhleenKaur_resume.pdf",
     "coverLetter": "",
     "internshipId": 1,
-    "status": "Applied"
+    "company": "intern.nation",
+    "position": "Backend Engineering Intern",
+    "status": "Applied",
+    "appliedAt": "2026-03-12T00:00:00.000Z"
   }
 ]

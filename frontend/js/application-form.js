@@ -28,7 +28,6 @@ document.getElementById("jobApplicationForm").addEventListener("submit", async f
   };
 
   try {
-
     const response = await fetch("http://localhost:5000/apply", {
       method: "POST",
       headers: {
@@ -38,6 +37,11 @@ document.getElementById("jobApplicationForm").addEventListener("submit", async f
     });
 
     const result = await response.json();
+
+    if (!response.ok) {
+      alert(result.message);
+      return;
+    }
 
     alert(result.message);
 

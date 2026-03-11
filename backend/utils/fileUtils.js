@@ -1,7 +1,16 @@
 const fs = require("fs");
 
-function readData(file) {
-  const data = fs.readFileSync(file, "utf8");
+function readData(file, fallback = []) {
+  if (!fs.existsSync(file)) {
+    return fallback;
+  }
+
+  const data = fs.readFileSync(file, "utf8").trim();
+
+  if (!data) {
+    return fallback;
+  }
+
   return JSON.parse(data);
 }
 
@@ -9,4 +18,8 @@ function writeData(file, data) {
   fs.writeFileSync(file, JSON.stringify(data, null, 2));
 }
 
-module.exports = { readData, writeData };
+function createFileReadStream(file, options = {}) {
+  return fs.createReadStream(file, options);
+}
+
+module.exports = { readData, writeData, createFileReadStream };

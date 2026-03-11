@@ -1,5 +1,6 @@
-const fs = require("fs");
 const path = require("path");
+const { readData, writeData } = require("../utils/fileUtils");
+const AppError = require("../utils/AppError");
 
 const settingsPath = path.join(__dirname, "../data/settings.json");
 const dataPath = path.join(__dirname, "../data/data.json");
@@ -9,18 +10,13 @@ const dataPath = path.join(__dirname, "../data/data.json");
 // GET SETTINGS
 // ============================
 
-exports.getSettings = (req, res) => {
-
-  fs.readFile(settingsPath, "utf8", (err, data) => {
-
-    if (err) {
-      return res.status(500).json({ error: "Cannot read settings file" });
-    }
-
-    res.json(JSON.parse(data));
-
-  });
-
+exports.getSettings = (req, res, next) => {
+  try {
+    const settings = readData(settingsPath, {});
+    res.json(settings);
+  } catch (error) {
+    next(new AppError("Cannot read settings file", 500));
+  }
 };
 
 
@@ -28,24 +24,13 @@ exports.getSettings = (req, res) => {
 // UPDATE SETTINGS
 // ============================
 
-exports.updateSettings = (req, res) => {
-
-  const newSettings = req.body;
-
-  fs.writeFile(
-    settingsPath,
-    JSON.stringify(newSettings, null, 2),
-    (err) => {
-
-      if (err) {
-        return res.status(500).json({ error: "Cannot save settings" });
-      }
-
-      res.json({ message: "Settings updated successfully" });
-
-    }
-  );
-
+exports.updateSettings = (req, res, next) => {
+  try {
+    writeData(settingsPath, req.body);
+    res.json({ message: "Settings updated successfully" });
+  } catch (error) {
+    next(new AppError("Cannot save settings", 500));
+  }
 };
 
 
@@ -53,18 +38,13 @@ exports.updateSettings = (req, res) => {
 // GET DASHBOARD DATA
 // ============================
 
-exports.getDashboardData = (req, res) => {
-
-  fs.readFile(dataPath, "utf8", (err, data) => {
-
-    if (err) {
-      return res.status(500).json({ error: "Cannot read data file" });
-    }
-
-    res.json(JSON.parse(data));
-
-  });
-
+exports.getDashboardData = (req, res, next) => {
+  try {
+    const dashboardData = readData(dataPath, {});
+    res.json(dashboardData);
+  } catch (error) {
+    next(new AppError("Cannot read data file", 500));
+  }
 };
 
 
@@ -72,46 +52,32 @@ exports.getDashboardData = (req, res) => {
 // UPDATE STATUS
 // ============================
 
-exports.updateStatus = (req, res) => {
+exports.updateStatus = (req, res, next) => {
+  try {
+    const { entity, id, status } = req.body;
+    const data = readData(dataPath, {});
+    const key = `${entity}s`;
 
-  const { entity, id, status } = req.body;
-
-  fs.readFile(dataPath, "utf8", (err, rawData) => {
-
-    if (err) {
-      return res.status(500).json({ error: "Cannot read data file" });
+    if (!entity || !id || !status) {
+      throw new AppError("Entity, id, and status are required", 400);
     }
 
-    let data = JSON.parse(rawData);
-
-    const key = entity + "s";
-
     if (!data[key]) {
-      return res.status(400).json({ error: "Invalid entity type" });
+      throw new AppError("Invalid entity type", 400);
     }
 
     const index = data[key].findIndex(item => item.id === Number(id));
 
     if (index === -1) {
-      return res.status(404).json({ error: "Item not found" });
+      throw new AppError("Item not found", 404);
     }
 
     data[key][index].status = status;
 
-    fs.writeFile(
-      dataPath,
-      JSON.stringify(data, null, 2),
-      (err) => {
+    writeData(dataPath, data);
 
-        if (err) {
-          return res.status(500).json({ error: "Cannot update data" });
-        }
-
-        res.json({ message: "Status updated successfully" });
-
-      }
-    );
-
-  });
-
+    res.json({ message: "Status updated successfully" });
+  } catch (error) {
+    next(error);
+  }
 };

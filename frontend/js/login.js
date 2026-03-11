@@ -90,7 +90,8 @@ document.querySelectorAll(".form").forEach(form => {
       localStorage.setItem("userInfo", JSON.stringify({
         name: result.name,
         email: email,
-        role: result.role
+        role: result.role,
+        companyName: result.companyName || ""
       }));
 
 

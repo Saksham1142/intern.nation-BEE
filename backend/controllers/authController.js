@@ -1,5 +1,6 @@
 const path = require("path");
 const { readData, writeData } = require("../utils/fileUtils");
+const AppError = require("../utils/AppError");
 
 const usersFile = path.join(__dirname, "../data/users.json");
 
@@ -9,7 +10,6 @@ const usersFile = path.join(__dirname, "../data/users.json");
 // =========================
 
 exports.signup = (req, res) => {
-
   const users = readData(usersFile);
 
   const {
@@ -25,23 +25,30 @@ exports.signup = (req, res) => {
     location
   } = req.body;
 
+  if (!name || !email || !password || !role) {
+    throw new AppError("Name, email, password, and role are required", 400);
+  }
+
+  if (role !== "student" && role !== "company") {
+    throw new AppError("Only student and company signup is allowed", 400);
+  }
+
   if(role === "admin"){
-    return res.status(403).json({
-      message: "Admin accounts cannot be created"
-    });
+    throw new AppError("Admin accounts cannot be created", 403);
   }
 
   const existingUser = users.find(u => u.email === email);
 
   if(existingUser){
-    return res.status(400).json({
-      message: "User already exists"
-    });
+    throw new AppError("User already exists", 400);
   }
 
   let newUser;
 
   if(role === "student"){
+    if (!studentId || !college || !department) {
+      throw new AppError("Student ID, college, and department are required", 400);
+    }
 
     newUser = {
       id: Date.now(),
@@ -57,6 +64,9 @@ exports.signup = (req, res) => {
   }
 
   else if(role === "company"){
+    if (!companyName || !industry || !location) {
+      throw new AppError("Company name, industry, and location are required", 400);
+    }
 
     newUser = {
       id: Date.now(),
@@ -77,7 +87,8 @@ exports.signup = (req, res) => {
 
   res.json({
     message: "Account created successfully",
-    role: newUser.role
+    role: newUser.role,
+    companyName: newUser.companyName || ""
   });
 
 };
@@ -88,10 +99,13 @@ exports.signup = (req, res) => {
 // =========================
 
 exports.login = (req, res) => {
-
   const users = readData(usersFile);
 
   const { email, password, role, adminId, studentId } = req.body;
+
+  if (!email || !password || !role) {
+    throw new AppError("Email, password, and role are required", 400);
+  }
 
   let user;
 
@@ -131,15 +145,15 @@ exports.login = (req, res) => {
   }
 
   if(!user){
-    return res.status(401).json({
-      message:"Invalid credentials"
-    });
+    throw new AppError("Invalid credentials", 401);
   }
 
   res.json({
     message:"Login successful",
     role:user.role,
-    name:user.name
+    name:user.name,
+    companyName:user.companyName || "",
+    email:user.email
   });
 
 };

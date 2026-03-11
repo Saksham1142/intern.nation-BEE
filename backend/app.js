@@ -9,6 +9,8 @@ const authRoutes = require("./routes/authRoutes");
 const internshipRoutes = require("./routes/internshipRoutes");
 const applicationRoutes = require("./routes/applicationRoutes");
 const settingsRoutes = require("./routes/settingsRoutes");
+const pageRoutes = require("./routes/pageRoutes");
+const notFoundHandler = require("./middleware/notFoundMiddleware");
 
 const app = express();
 
@@ -25,7 +27,10 @@ app.use(express.static(path.join(__dirname, "../frontend")));
 app.use("/", authRoutes);
 app.use("/", internshipRoutes);
 app.use("/", applicationRoutes);
+app.use("/", pageRoutes);
 app.use("/api", settingsRoutes);
+
+app.use(notFoundHandler);
 
 // error middleware
 app.use(errorHandler);
