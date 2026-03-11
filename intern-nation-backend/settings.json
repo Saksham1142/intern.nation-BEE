@@ -1,0 +1,8 @@
+{
+  "site_name": "intern.nation",
+  "admin_email": "Shipra@gmail.com",
+  "two_factor": true,
+  "notification_email": "notification@example.com",
+  "receive_updates": true,
+  "dark_mode": false
+}

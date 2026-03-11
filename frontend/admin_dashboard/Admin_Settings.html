@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Settings - Admin Dashboard</title>
     <link rel="stylesheet" href="../css/Admin_Settings.css" />
-    <link rel="icon" type="jpeg" href="../assets/logo.jpeg">
+    <link rel="icon" type="jpeg" href="https://github.com/prbhleeen/intern.nation/blob/main/assets/logo.jpeg?raw=true">
     <style>
-
+        /* Optional: smooth transition when switching themes */
         * {
             transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
         }
@@ -16,11 +17,12 @@
 
 <body>
     <header>
-        <img src="../assets/logo.jpeg" alt="Logo" />
+        <img src="https://github.com/prbhleeen/intern.nation/blob/main/assets/logo.jpeg?raw=true" alt="Logo" />
         <h1>Admin Settings</h1>
     </header>
 
     
+    <!-- ===== MAIN LAYOUT ===== -->
   <div class="dashboard-container">
     <aside class="sidebar">
       <ul>
@@ -109,32 +111,74 @@
     </footer>
 
     <script>
-        
-        document.getElementById("settingsForm").addEventListener("submit", function (e) {
-            e.preventDefault();
-            window.location.href = "Dashboard.html";
-        });
 
-        
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", async () => {
+            const form = document.getElementById("settingsForm");
+            const darkModeSwitch = document.getElementById("dark-mode");
+            const modeLabel = document.getElementById("mode-label");
+
+            // ✅ Load saved theme
             const savedTheme = localStorage.getItem("theme") || "light";
             document.documentElement.setAttribute("data-theme", savedTheme);
+            darkModeSwitch.checked = savedTheme === "dark";
+            modeLabel.textContent = savedTheme === "dark" ? "Dark Mode" : "Light Mode";
 
-            const darkModeSwitch = document.getElementById("dark-mode");
-            const label = document.getElementById("mode-label");
+            darkModeSwitch.addEventListener("change", () => {
+                const theme = darkModeSwitch.checked ? "dark" : "light";
+                document.documentElement.setAttribute("data-theme", theme);
+                localStorage.setItem("theme", theme);
+                modeLabel.textContent = theme === "dark" ? "Dark Mode" : "Light Mode";
+            });
 
-            if (darkModeSwitch) {
-                darkModeSwitch.checked = savedTheme === "dark";
-                label.textContent = savedTheme === "dark" ? "Dark Mode" : "Light Mode";
+            // ✅ Fetch settings from backend
+            try {
+                const response = await fetch("http://localhost:5000/api/settings");
+                const settings = await response.json();
 
-                darkModeSwitch.addEventListener("change", function () {
-                    const theme = this.checked ? "dark" : "light";
-                    document.documentElement.setAttribute("data-theme", theme);
-                    localStorage.setItem("theme", theme);
-                    label.textContent = theme === "dark" ? "Dark Mode" : "Light Mode";
-                });
+                document.getElementById("site-name").value = settings.site_name;
+                document.getElementById("admin-email").value = settings.admin_email;
+                document.getElementById("notification-email").value = settings.notification_email;
+                document.getElementById("two-factor").checked = settings.two_factor;
+                document.getElementById("receive-updates").checked = settings.receive_updates;
+                darkModeSwitch.checked = settings.dark_mode;
+                modeLabel.textContent = settings.dark_mode ? "Dark Mode" : "Light Mode";
+            } catch (error) {
+                console.error("Error loading settings:", error);
             }
+
+            // ✅ Save settings (PUT request)
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+
+                const updatedSettings = {
+                    site_name: document.getElementById("site-name").value,
+                    admin_email: document.getElementById("admin-email").value,
+                    two_factor: document.getElementById("two-factor").checked,
+                    notification_email: document.getElementById("notification-email").value,
+                    receive_updates: document.getElementById("receive-updates").checked,
+                    dark_mode: darkModeSwitch.checked
+                };
+
+                try {
+                    const res = await fetch("http://localhost:5000/api/settings", {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(updatedSettings)
+                    });
+
+                    if (res.ok) {
+                        alert("✅ Settings saved successfully!");
+                        window.location.href = "Dashboard.html";
+                    } else {
+                        alert("❌ Failed to save settings.");
+                    }
+                } catch (err) {
+                    console.error("Save error:", err);
+                    alert("⚠️ Error connecting to backend.");
+                }
+            });
         });
     </script>
 </body>
+
 </html>

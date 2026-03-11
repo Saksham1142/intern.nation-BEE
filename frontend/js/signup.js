@@ -42,7 +42,7 @@ document.getElementById("student").addEventListener("submit", async function (e)
 
   try {
 
-    const res = await fetch("http://localhost:3000/signup", {
+    const res = await fetch("http://localhost:5000/signup", {
 
       method: "POST",
 
@@ -95,7 +95,7 @@ document.getElementById("company").addEventListener("submit", async function (e)
 
   try {
 
-    const res = await fetch("http://localhost:3000/signup", {
+    const res = await fetch("http://localhost:5000/signup", {
 
       method: "POST",
 
