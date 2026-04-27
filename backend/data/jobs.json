@@ -1,0 +1,42 @@
+[
+  {
+    "id": "DRV101",
+    "title": "Software Developer Trainee",
+    "company": "Microsoft",
+    "location": "Bangalore",
+    "salary": "1000000 / annum",
+    "logo": "../assets/microsoft.jpg"
+  },
+  {
+    "id": "DRV102",
+    "title": "Junior Data Analyst",
+    "company": "Amazon",
+    "location": "Hyderabad",
+    "salary": "1150000 / annum",
+    "logo": "../assets/amazon.png"
+  },
+  {
+    "id": "DRV103",
+    "title": "Associate Product Manager",
+    "company": "Google",
+    "location": "Mumbai",
+    "salary": "1200000 / annum",
+    "logo": "../assets/google.png"
+  },
+  {
+    "id": "DRV104",
+    "title": "Mechanical Engineer",
+    "company": "Tesla",
+    "location": "Pune",
+    "salary": "950000 / annum",
+    "logo": "../assets/tesla.png"
+  },
+  {
+    "id": "DRV105",
+    "title": "System Engineer",
+    "company": "Infosys",
+    "location": "Hyderabad",
+    "salary": "900000 / annum",
+    "logo": "../assets/infosys.png"
+  }
+]

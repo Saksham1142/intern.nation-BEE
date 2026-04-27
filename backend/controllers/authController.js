@@ -5,9 +5,7 @@ const AppError = require("../utils/AppError");
 const usersFile = path.join(__dirname, "../data/users.json");
 
 
-// =========================
-// SIGNUP
-// =========================
+
 
 exports.signup = (req, res) => {
   const users = readData(usersFile);
@@ -100,9 +98,6 @@ exports.signup = (req, res) => {
 };
 
 
-// =========================
-// LOGIN
-// =========================
 
 exports.login = (req, res) => {
   const users = readData(usersFile);
