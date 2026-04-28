@@ -8,7 +8,7 @@ mongoose.connect(process.env.MONGO_URI)
 
     // load all JSON files
     const applications = JSON.parse(fs.readFileSync("./data/applications.json", "utf-8"));
-    const data = JSON.parse(fs.readFileSync("./data/datas.json", "utf-8"));
+    const data = JSON.parse(fs.readFileSync("./data/data.json", "utf-8"));
     const internships = JSON.parse(fs.readFileSync("./data/internships.json", "utf-8"));
     const jobs = JSON.parse(fs.readFileSync("./data/jobs.json", "utf-8"));
     const settings = JSON.parse(fs.readFileSync("./data/settings.json", "utf-8"));
