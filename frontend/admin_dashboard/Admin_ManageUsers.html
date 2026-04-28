@@ -13,6 +13,10 @@
 <link rel="icon" type="jpeg"
 href="https://github.com/prbhleeen/intern.nation/blob/main/assets/logo.jpeg?raw=true">
 
+<!-- Socket.IO -->
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="../js/socket.js"></script>
+
 </head>
 
 <body>
@@ -45,6 +49,17 @@ href="https://github.com/prbhleeen/intern.nation/blob/main/assets/logo.jpeg?raw=
 
 
 <main class="main-content">
+
+<!-- 🔥 LIVE STATS (STEP 2) -->
+<section class="stats">
+
+<div>Total Users: <span id="totalUsers">0</span></div>
+<div>Approved: <span id="approvedUsers">0</span></div>
+<div>Pending: <span id="pendingUsers">0</span></div>
+<div>Rejected: <span id="rejectedUsers">0</span></div>
+
+</section>
+
 
 <section id="users">
 
@@ -81,9 +96,7 @@ href="https://github.com/prbhleeen/intern.nation/blob/main/assets/logo.jpeg?raw=
 
 
 <footer>
-
 © 2025 intern.nation | All Rights Reserved
-
 </footer>
 
 
@@ -103,20 +116,19 @@ const data = await res.json();
 const students = data.students || [];
 const table = document.getElementById("usersTable");
 
-table.innerHTML="";
+table.innerHTML = "";
 
-students.forEach(user=>{
+students.forEach(user => {
 
 const status = user.status || "pending";
 
-let badge="pending";
-if(status==="approved") badge="active";
-if(status==="rejected") badge="rejected";
+let badge = "pending";
+if(status === "approved") badge = "active";
+if(status === "rejected") badge = "rejected";
 
 const disabled = status !== "pending" ? "disabled" : "";
 
-table.innerHTML +=`
-
+table.innerHTML += `
 <tr>
 
 <td>${user.id}</td>
@@ -133,14 +145,14 @@ ${status.toUpperCase()}
 
 <button 
 class="action-button approve"
-onclick="updateStatus(${user.id},'approved')" 
+onclick="updateStatus(${user.id}, 'approved')" 
 ${disabled}>
 Approve
 </button>
 
 <button 
 class="action-button reject"
-onclick="updateStatus(${user.id},'rejected')" 
+onclick="updateStatus(${user.id}, 'rejected')" 
 ${disabled}>
 Reject
 </button>
@@ -159,25 +171,43 @@ View
 
 </tr>
 `;
-
 });
+
+updateStats(students);
 
 }
 
 catch(error){
-
-console.error("Error loading users:",error);
-
+console.error("Error loading users:", error);
 }
 
 }
 
 
 /* =========================
-UPDATE STATUS
+LIVE STATS (STEP 2)
 ========================= */
 
-async function updateStatus(id,status){
+function updateStats(students){
+
+const total = students.length;
+const approved = students.filter(u => u.status === "approved").length;
+const pending = students.filter(u => u.status === "pending").length;
+const rejected = students.filter(u => u.status === "rejected").length;
+
+document.getElementById("totalUsers").innerText = total;
+document.getElementById("approvedUsers").innerText = approved;
+document.getElementById("pendingUsers").innerText = pending;
+document.getElementById("rejectedUsers").innerText = rejected;
+
+}
+
+
+/* =========================
+UPDATE STATUS (WITH SOCKET)
+========================= */
+
+async function updateStatus(id, status){
 
 try{
 
@@ -197,6 +227,12 @@ status:status
 
 });
 
+// 🔥 REAL-TIME EVENT
+socket.emit("user_status_updated", {
+id,
+status
+});
+
 alert("Status Updated");
 
 loadUsers();
@@ -204,9 +240,7 @@ loadUsers();
 }
 
 catch(error){
-
-console.error("Error updating status:",error);
-
+console.error("Error updating status:", error);
 }
 
 }
@@ -217,10 +251,21 @@ VIEW USER DETAILS
 ========================= */
 
 function viewUser(id){
-
-window.location.href=`Admin_viewdetails.html?id=${id}`;
-
+window.location.href = `Admin_viewdetails.html?id=${id}`;
 }
+
+
+/* =========================
+SOCKET LIVE REFRESH (STEP 2)
+========================= */
+
+socket.on("user_status_changed", () => {
+loadUsers();
+});
+
+socket.on("notification:receive", (data) => {
+alert(data.message);
+});
 
 
 /* =========================
@@ -232,5 +277,4 @@ loadUsers();
 </script>
 
 </body>
-
 </html>
