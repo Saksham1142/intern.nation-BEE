@@ -152,7 +152,7 @@
     <div class="confirm-box">
       <h3>Are you sure you want to logout?</h3>
       <div class="confirm-actions">
-        <a href="login.html" class="yes">✅ Yes, Logout</a>
+        <a href="../login.html" class="yes">✅ Yes, Logout</a>
         <a href="#" class="no">✖ Cancel</a>
       </div>
     </div>
@@ -172,6 +172,13 @@
   </div>
 
   <script>
+
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+
+if (!user) {
+  alert("Please login first");
+  window.location.href = "../login.html";
+}
      document.addEventListener("DOMContentLoaded", () => {
       
       const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
@@ -287,7 +294,10 @@
       }
     });
   </script>
-
+<script src="../js/logout.js"></script>
+<script>
+  setupLogout();
+</script>
 </body>
 
 </html>

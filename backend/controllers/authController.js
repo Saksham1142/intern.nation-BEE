@@ -1,161 +1,133 @@
-const path = require("path");
-const { readData, writeData } = require("../utils/fileUtils");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+const User = require("../models/User");
 const AppError = require("../utils/AppError");
 
-const usersFile = path.join(__dirname, "../data/users.json");
+// =========================
+// SIGNUP (MongoDB)
+// =========================
 
-
-
-
-exports.signup = (req, res) => {
-  const users = readData(usersFile);
-
-  const {
-    name,
-    email,
-    password,
-    role,
-    studentId,
-    college,
-    department,
-    companyId,
-    companyName,
-    industry,
-    location
-  } = req.body;
-
-  if (!email || !password || !role) {
-    throw new AppError("Email, password, and role are required", 400);
-  }
-
-  if (role !== "student" && role !== "company") {
-    throw new AppError("Only student and company signup is allowed", 400);
-  }
-
-  if(role === "admin"){
-    throw new AppError("Admin accounts cannot be created", 403);
-  }
-
-  const existingUser = users.find(u => u.email === email);
-
-  if(existingUser){
-    throw new AppError("User already exists", 400);
-  }
-
-  let newUser;
-
-  if(role === "student"){
-    if (!name) {
-      throw new AppError("Name is required", 400);
-    }
-
-    if (!studentId || !college || !department) {
-      throw new AppError("Student ID, college, and department are required", 400);
-    }
-
-    newUser = {
-      id: Date.now(),
+exports.signup = async (req, res, next) => {
+  try {
+    const {
       name,
       email,
       password,
       role,
       studentId,
       college,
-      department
-    };
-
-  }
-
-  else if(role === "company"){
-    if (!companyName || !companyId || !industry || !location) {
-      throw new AppError("Company name, company ID, industry, and location are required", 400);
-    }
-
-    newUser = {
-      id: Date.now(),
-      name: companyName,
-      email,
-      password,
-      role,
+      department,
       companyId,
       companyName,
       industry,
       location
-    };
+    } = req.body;
 
+    if (!email || !password || !role) {
+      throw new AppError("Email, password, and role required", 400);
+    }
+
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      throw new AppError("User already exists", 400);
+    }
+
+    // HASH PASSWORD
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    let newUser;
+
+    if (role === "student") {
+      newUser = new User({
+        name,
+        email,
+        password: hashedPassword,
+        role,
+        studentId,
+        college,
+        department
+      });
+    } else if (role === "company") {
+      newUser = new User({
+        name: companyName,
+        email,
+        password: hashedPassword,
+        role,
+        companyId,
+        companyName,
+        industry,
+        location
+      });
+    } else {
+      throw new AppError("Invalid role", 400);
+    }
+
+    await newUser.save();
+
+    res.json({
+      message: "Account created successfully",
+      role: newUser.role
+    });
+
+  } catch (err) {
+    next(err);
   }
-
-  users.push(newUser);
-
-  writeData(usersFile, users);
-
-  res.json({
-    message: "Account created successfully",
-    role: newUser.role,
-    companyName: newUser.companyName || ""
-  });
-
 };
 
+// =========================
+// LOGIN (MongoDB)
+// =========================
 
+exports.login = async (req, res, next) => {
+  try {
+    const { email, password, role } = req.body;
 
-exports.login = (req, res) => {
-  const users = readData(usersFile);
+    if (!email || !password || !role) {
+      throw new AppError("Email, password, role required", 400);
+    }
 
-  const { email, password, role, adminId, studentId, companyId } = req.body;
+    const user = await User.findOne({ email, role });
 
-  if (!email || !password || !role) {
-    throw new AppError("Email, password, and role are required", 400);
-  }
+    if (!user) {
+      throw new AppError("User not found", 401);
+    }
 
-  let user;
+    // CHECK PASSWORD
+    const isMatch = await bcrypt.compare(password, user.password);
 
-  if(role === "admin"){
+    if (!isMatch) {
+      throw new AppError("Invalid password", 401);
+    }
 
-    user = users.find(
-      u =>
-      u.email === email &&
-      u.password === password &&
-      u.role === "admin" &&
-      String(u.adminId) === String(adminId)
+    // SESSION
+    req.session.user = {
+      id: user._id,
+      email: user.email,
+      role: user.role
+    };
+
+    // JWT
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      "secretkey",
+      { expiresIn: "1h" }
     );
 
+    // COOKIE
+res.cookie("token", token, {
+  httpOnly: true,
+  sameSite: "lax"
+});
+    res.json({
+      message: "Login successful",
+      role: user.role,
+      name: user.companyName || user.name,
+      token
+    });
+
+  } catch (err) {
+    next(err);
   }
-
-  else if(role === "student"){
-
-    user = users.find(
-      u =>
-      u.email === email &&
-      u.password === password &&
-      u.role === "student" &&
-      String(u.studentId) === String(studentId)
-    );
-
-  }
-
-  else if(role === "company"){
-
-    user = users.find(
-      u =>
-      u.email === email &&
-      u.password === password &&
-      u.role === "company" &&
-      String(u.companyId) === String(companyId)
-    );
-
-  }
-
-  if(!user){
-    throw new AppError("Invalid credentials", 401);
-  }
-
-  res.json({
-    message:"Login successful",
-    role:user.role,
-    name:user.companyName || user.name,
-    companyName:user.companyName || "",
-    email:user.email
-  });
-
 };

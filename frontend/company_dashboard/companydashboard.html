@@ -107,6 +107,13 @@
   </footer>
 
 <script>
+
+  const user = JSON.parse(localStorage.getItem("userInfo"));
+
+if (!user) {
+  alert("Please login first");
+  window.location.href = "../login.html";
+}
    document.addEventListener("DOMContentLoaded", () => {
       // ✅ Load user info
       const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
@@ -167,7 +174,10 @@
   </div>
 </div>
 
-
+<script src="../js/logout.js"></script>
+<script>
+  setupLogout();
+</script>
 
 </body>
 </html>

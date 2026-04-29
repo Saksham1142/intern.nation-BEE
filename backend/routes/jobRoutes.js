@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { getAllJobs, getJobById } = require("../controllers/jobController");
 
-router.get("/jobs", getAllJobs);
-router.get("/jobs/:id", getJobById);
+// Placeholder (if needed later)
+router.get("/jobs", (req, res) => {
+  res.send("Jobs route working");
+});
 
 module.exports = router;

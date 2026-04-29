@@ -1,53 +1,35 @@
-const path = require("path");
-const { readData, writeData } = require("../utils/fileUtils");
+const Internship = require("../models/Internship");
 
-const internshipsFile = path.join(__dirname, "../data/internships.json");
+// POST internship
+exports.postInternship = async (req, res, next) => {
+  try {
+    const { title, company, location, stipend, skills, description } = req.body;
 
-exports.postInternship = (req, res) => {
+    const newInternship = new Internship({
+      title,
+      company,
+      location,
+      stipend,
+      skills,
+      description,
+      postedBy: req.session?.user?.email || "unknown"
+    });
 
-  const internships = readData(internshipsFile);
+    await newInternship.save();
 
-  const {
-    postType,
-    jobTitle,
-    department,
-    locationType,
-    openings,
-    salary,
-    duration,
-    description,
-    skills,
-    deadline
-  } = req.body;
+    res.json({ message: "Internship posted" });
 
-  let skillsArray = [];
-
-  if (typeof skills === "string") {
-    skillsArray = skills.split(",").map(s => s.trim());
-  } else if (Array.isArray(skills)) {
-    skillsArray = skills;
+  } catch (err) {
+    next(err);
   }
+};
 
-  const newInternship = {
-    id: Date.now(),
-    title: jobTitle,
-    company: "Company User",
-    location: locationType,
-    stipend: salary,
-    type: postType,
-    department,
-    openings,
-    description,
-    skills: skillsArray,
-    deadline,
-    duration
-  };
-
-  internships.push(newInternship);
-
-  writeData(internshipsFile, internships);
-
-  res.json({
-    message: "Internship posted successfully"
-  });
+// GET internships
+exports.getInternships = async (req, res, next) => {
+  try {
+    const data = await Internship.find();
+    res.json(data);
+  } catch (err) {
+    next(err);
+  }
 };

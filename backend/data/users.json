@@ -48,5 +48,15 @@
     "studentId": "1234567895",
     "college": "chitkara university",
     "department": "CSE"
+  },
+  {
+    "id": 1777395025350,
+    "name": "Shreya Sharma",
+    "email": "shreya1682.becse24@chitkara.edu.in",
+    "password": "$2b$10$cSslKzXCAm11CeRhut9vA.wZ38ta8u3/7BTxDtshkU3zcglHBZAtO",
+    "role": "student",
+    "studentId": "2410991682",
+    "college": "Chitkara University",
+    "department": "CSE"
   }
 ]
