@@ -1,34 +1,25 @@
-const Internship = require("../models/Internship");
+const internshipService = require("../services/internshipService");
 
-// POST internship
 exports.postInternship = async (req, res, next) => {
   try {
-    const { title, company, location, stipend, skills, description } = req.body;
+    const result = await internshipService.postInternship(req.body);
 
-    const newInternship = new Internship({
-      title,
-      company,
-      location,
-      stipend,
-      skills,
-      description,
-      postedBy: req.session?.user?.email || "unknown"
+    res.json({
+      message: "Internship posted",
+      data: result
     });
-
-    await newInternship.save();
-
-    res.json({ message: "Internship posted" });
 
   } catch (err) {
     next(err);
   }
 };
 
-// GET internships
 exports.getInternships = async (req, res, next) => {
   try {
-    const data = await Internship.find();
+    const data = await internshipService.getInternships();
+
     res.json(data);
+
   } catch (err) {
     next(err);
   }

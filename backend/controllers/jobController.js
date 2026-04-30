@@ -1,47 +1,26 @@
-const fs = require("fs");
-const path = require("path");
+const jobService = require("../services/jobService");
 
-const jobsFile = path.join(__dirname, "../data/jobs.json");
+exports.postJob = async (req, res, next) => {
+  try {
+    const result = await jobService.postJob(req.body);
 
-// get all jobs
-exports.getAllJobs = (req, res) => {
+    res.json({
+      message: "Job posted",
+      data: result
+    });
 
-    try {
-
-        const data = fs.readFileSync(jobsFile);
-        const jobs = JSON.parse(data);
-
-        res.json(jobs);
-
-    } catch (error) {
-
-        res.status(500).json({ message: "Error reading jobs data" });
-
-    }
-
+  } catch (err) {
+    next(err);
+  }
 };
 
+exports.getJobs = async (req, res, next) => {
+  try {
+    const data = await jobService.getJobs();
 
-// get job by id
-exports.getJobById = (req, res) => {
+    res.json(data);
 
-    try {
-
-        const data = fs.readFileSync(jobsFile);
-        const jobs = JSON.parse(data);
-
-        const job = jobs.find(j => j.id === req.params.id);
-
-        if (!job) {
-            return res.status(404).json({ message: "Job not found" });
-        }
-
-        res.json(job);
-
-    } catch (error) {
-
-        res.status(500).json({ message: "Error fetching job" });
-
-    }
-
+  } catch (err) {
+    next(err);
+  }
 };

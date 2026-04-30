@@ -1,30 +1,25 @@
-const Application = require("../models/Application");
+const applicationService = require("../services/applicationService");
 
-// APPLY
 exports.applyInternship = async (req, res, next) => {
   try {
-    const { studentName, email, internshipId } = req.body;
+    const result = await applicationService.applyInternship(req.body);
 
-    const app = new Application({
-      studentName,
-      email,
-      internshipId
+    res.json({
+      message: "Application submitted",
+      data: result
     });
-
-    await app.save();
-
-    res.json({ message: "Applied successfully" });
 
   } catch (err) {
     next(err);
   }
 };
 
-// VIEW
 exports.getApplications = async (req, res, next) => {
   try {
-    const apps = await Application.find();
-    res.json(apps);
+    const data = await applicationService.getApplications();
+
+    res.json(data);
+
   } catch (err) {
     next(err);
   }
