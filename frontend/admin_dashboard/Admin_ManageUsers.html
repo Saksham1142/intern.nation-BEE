@@ -22,55 +22,40 @@ href="https://github.com/prbhleeen/intern.nation/blob/main/assets/logo.jpeg?raw=
 <body>
 
 <header>
-
 <img src="https://github.com/prbhleeen/intern.nation/blob/main/assets/logo.jpeg?raw=true">
-
 <h1>intern.nation - Manage Users</h1>
-
 </header>
-
 
 <div class="dashboard-container">
 
 <aside class="sidebar">
-
 <ul>
-
 <li><a href="Admin_Dashboard.html">🏠 Dashboard</a></li>
 <li><a href="Admin_Statistics.html">📊 View All Statistics</a></li>
 <li><a href="Admin_ManageUsers.html">👥 Manage Users</a></li>
 <li><a href="Admin_ManageCompanies.html">🏢 Manage Companies</a></li>
 <li><a href="Admin_ViewSchedules.html">📅 View Schedules</a></li>
 <li><a href="Admin_Settings.html">⚙ System Settings</a></li>
-
 </ul>
-
 </aside>
-
 
 <main class="main-content">
 
-<!-- 🔥 LIVE STATS (STEP 2) -->
 <section class="stats">
-
 <div>Total Users: <span id="totalUsers">0</span></div>
 <div>Approved: <span id="approvedUsers">0</span></div>
 <div>Pending: <span id="pendingUsers">0</span></div>
 <div>Rejected: <span id="rejectedUsers">0</span></div>
-
 </section>
-
 
 <section id="users">
 
 <h2>Manage All Users</h2>
 
 <div class="table-container">
-
 <table class="users-table">
 
 <thead>
-
 <tr>
 <th>ID</th>
 <th>User Name</th>
@@ -79,26 +64,21 @@ href="https://github.com/prbhleeen/intern.nation/blob/main/assets/logo.jpeg?raw=
 <th>Actions</th>
 <th>View</th>
 </tr>
-
 </thead>
 
 <tbody id="usersTable"></tbody>
 
 </table>
-
 </div>
 
 </section>
 
 </main>
-
 </div>
-
 
 <footer>
 © 2025 intern.nation | All Rights Reserved
 </footer>
-
 
 <script>
 
@@ -113,10 +93,18 @@ try{
 const res = await fetch("http://localhost:5000/api/data");
 const data = await res.json();
 
+console.log("🔥 API DATA:", data);
+
 const students = data.students || [];
 const table = document.getElementById("usersTable");
 
 table.innerHTML = "";
+
+// ❗ IF EMPTY → SHOW MESSAGE
+if(students.length === 0){
+  table.innerHTML = `<tr><td colspan="6">No users found</td></tr>`;
+  return;
+}
 
 students.forEach(user => {
 
@@ -128,10 +116,13 @@ if(status === "rejected") badge = "rejected";
 
 const disabled = status !== "pending" ? "disabled" : "";
 
+// ✅ FIX: use _id
+const id = user._id;
+
 table.innerHTML += `
 <tr>
 
-<td>${user.id}</td>
+<td>${id}</td>
 <td>${user.name}</td>
 <td>${user.email}</td>
 
@@ -145,14 +136,14 @@ ${status.toUpperCase()}
 
 <button 
 class="action-button approve"
-onclick="updateStatus(${user.id}, 'approved')" 
+onclick="updateStatus('${id}', 'approved')" 
 ${disabled}>
 Approve
 </button>
 
 <button 
 class="action-button reject"
-onclick="updateStatus(${user.id}, 'rejected')" 
+onclick="updateStatus('${id}', 'rejected')" 
 ${disabled}>
 Reject
 </button>
@@ -163,7 +154,7 @@ Reject
 
 <button 
 class="action-button view"
-onclick="viewUser(${user.id})">
+onclick="viewUser('${id}')">
 View
 </button>
 
@@ -178,40 +169,41 @@ updateStats(students);
 }
 
 catch(error){
-console.error("Error loading users:", error);
+console.error("❌ Error loading users:", error);
 }
 
 }
 
 
 /* =========================
-LIVE STATS (STEP 2)
+LIVE STATS
 ========================= */
 
 function updateStats(students){
 
-const total = students.length;
-const approved = students.filter(u => u.status === "approved").length;
-const pending = students.filter(u => u.status === "pending").length;
-const rejected = students.filter(u => u.status === "rejected").length;
+document.getElementById("totalUsers").innerText = students.length;
 
-document.getElementById("totalUsers").innerText = total;
-document.getElementById("approvedUsers").innerText = approved;
-document.getElementById("pendingUsers").innerText = pending;
-document.getElementById("rejectedUsers").innerText = rejected;
+document.getElementById("approvedUsers").innerText =
+students.filter(u => u.status === "approved").length;
+
+document.getElementById("pendingUsers").innerText =
+students.filter(u => u.status === "pending").length;
+
+document.getElementById("rejectedUsers").innerText =
+students.filter(u => u.status === "rejected").length;
 
 }
 
 
 /* =========================
-UPDATE STATUS (WITH SOCKET)
+UPDATE STATUS
 ========================= */
 
 async function updateStatus(id, status){
 
 try{
 
-await fetch("http://localhost:5000/api/update-status",{
+const res = await fetch("http://localhost:5000/api/update-status",{
 
 method:"PATCH",
 
@@ -220,27 +212,23 @@ headers:{
 },
 
 body:JSON.stringify({
-entity:"student",
 id:id,
 status:status
 })
 
 });
 
-// 🔥 REAL-TIME EVENT
-socket.emit("user_status_updated", {
-id,
-status
-});
+const result = await res.json();
 
-alert("Status Updated");
-
-loadUsers();
-
+if(result.success){
+  console.log("✅ Status updated");
+}else{
+  console.warn("⚠ Update failed");
 }
 
+}
 catch(error){
-console.error("Error updating status:", error);
+console.error("❌ Error updating status:", error);
 }
 
 }
@@ -256,15 +244,20 @@ window.location.href = `Admin_viewdetails.html?id=${id}`;
 
 
 /* =========================
-SOCKET LIVE REFRESH (STEP 2)
+SOCKET EVENTS
 ========================= */
 
+// 🔥 AUTO REFRESH
 socket.on("user_status_changed", () => {
+console.log("🔄 Refresh triggered");
 loadUsers();
 });
 
+// 🔔 NOTIFICATIONS
 socket.on("notification:receive", (data) => {
-alert(data.message);
+if(data?.message){
+  alert(data.message);
+}
 });
 
 

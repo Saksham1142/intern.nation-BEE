@@ -1,6 +1,8 @@
 const authService = require("../services/authService");
 
-// SIGNUP
+// ========================
+// SIGNUP CONTROLLER
+// ========================
 exports.signup = async (req, res, next) => {
   try {
 
@@ -8,6 +10,7 @@ exports.signup = async (req, res, next) => {
 
     res.json({
       message: "Account created successfully",
+      userId: user.id,
       role: user.role
     });
 
@@ -16,7 +19,9 @@ exports.signup = async (req, res, next) => {
   }
 };
 
-// LOGIN
+// ========================
+// LOGIN CONTROLLER
+// ========================
 exports.login = async (req, res, next) => {
   try {
 
@@ -24,7 +29,7 @@ exports.login = async (req, res, next) => {
 
     // SESSION
     req.session.user = {
-      id: user._id,
+      id: user.id,
       email: user.email,
       role: user.role
     };
@@ -38,10 +43,32 @@ exports.login = async (req, res, next) => {
     res.json({
       message: "Login successful",
       role: user.role,
-      name: user.companyName || user.name
+      name: user.fullName,
+      token
     });
 
   } catch (err) {
     next(err);
   }
 };
+
+// ========================
+// UPDATE USER CONTROLLER
+// ========================
+exports.updateUser = async (req, res, next) => {
+  try {
+
+    const updatedUser = await authService.updateUserById(
+      req.params.id,
+      req.body
+    );
+
+    res.json({
+      message: "User updated successfully",
+      user: updatedUser
+    });
+
+  } catch (err) {
+    next(err);
+  }
+}

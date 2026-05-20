@@ -1,31 +1,107 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const User = require("../models/User");
+
+const prisma = require("../config/prisma");
 const AppError = require("../utils/AppError");
 
-// LOGIN LOGIC
-exports.loginUser = async ({ email, password, role }) => {
+// ========================
+// SIGNUP SERVICE
+// ========================
+exports.signupUser = async (data) => {
 
-  if (!email || !password || !role) {
-    throw new AppError("Email, password, role required", 400);
+  const {
+    fullName,
+    email,
+    password,
+    confirmPassword,
+    studentId,
+    collegeName,
+    collegeDepartment
+  } = data;
+
+  // Validate fields
+  if (
+    !fullName ||
+    !email ||
+    !password ||
+    !confirmPassword ||
+    !studentId ||
+    !collegeName ||
+    !collegeDepartment
+  ) {
+    throw new AppError("All fields are required", 400);
   }
 
-  const user = await User.findOne({ email, role });
+  // Password match check
+  if (password !== confirmPassword) {
+    throw new AppError("Passwords do not match", 400);
+  }
+
+  // Check existing user
+  const existingUser = await prisma.user.findUnique({
+    where: { email }
+  });
+
+  if (existingUser) {
+    throw new AppError("User already exists", 400);
+  }
+
+  // Hash password
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  // Create user
+  const newUser = await prisma.user.create({
+    data: {
+      fullName,
+      email,
+      password: hashedPassword,
+      studentId,
+      collegeName,
+      collegeDepartment,
+      role: "Student"
+    }
+  });
+
+  return newUser;
+};
+
+// ========================
+// LOGIN SERVICE
+// ========================
+exports.loginUser = async ({ email, password }) => {
+
+  if (!email || !password) {
+    throw new AppError("Email and password required", 400);
+  }
+
+  // Find user
+  const user = await prisma.user.findUnique({
+    where: {
+      email
+    }
+  });
 
   if (!user) {
     throw new AppError("User not found", 401);
   }
 
+  // Compare password
   const isMatch = await bcrypt.compare(password, user.password);
 
   if (!isMatch) {
     throw new AppError("Invalid password", 401);
   }
 
+  // Generate token
   const token = jwt.sign(
-    { id: user._id, role: user.role },
+    {
+      id: user.id,
+      role: user.role
+    },
     "secretkey",
-    { expiresIn: "1h" }
+    {
+      expiresIn: "1h"
+    }
   );
 
   return {
@@ -34,29 +110,32 @@ exports.loginUser = async ({ email, password, role }) => {
   };
 };
 
-// SIGNUP LOGIC
-exports.signupUser = async (data) => {
+// ========================
+// UPDATE USER BY ID
+// ========================
+exports.updateUserById = async (id, data) => {
 
-  const { email, password, role } = data;
-
-  if (!email || !password || !role) {
-    throw new AppError("Email, password, role required", 400);
-  }
-
-  const existingUser = await User.findOne({ email });
-
-  if (existingUser) {
-    throw new AppError("User already exists", 400);
-  }
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  const newUser = new User({
-    ...data,
-    password: hashedPassword
+  const existingUser = await prisma.user.findUnique({
+    where: {
+      id: Number(id)
+    }
   });
 
-  await newUser.save();
+  if (!existingUser) {
+    throw new AppError("User not found", 404);
+  }
 
-  return newUser;
+  // Hash password if updated
+  if (data.password) {
+    data.password = await bcrypt.hash(data.password, 10);
+  }
+
+  const updatedUser = await prisma.user.update({
+    where: {
+      id: Number(id)
+    },
+    data
+  });
+
+  return updatedUser;
 };
