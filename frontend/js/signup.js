@@ -2,17 +2,23 @@
 // ROLE TAB SWITCHING
 // =========================
 
+// role tabs
 const studentTab = document.getElementById("student-tab");
 const companyTab = document.getElementById("company-tab");
 
+// forms
 const studentForm = document.getElementById("student");
 const companyForm = document.getElementById("company");
 
+
+// function to switch forms
 function showForm(role){
 
+  // remove active class from all
   studentForm.classList.remove("active");
   companyForm.classList.remove("active");
 
+  // activate selected form
   if(role === "student"){
     studentForm.classList.add("active");
   }
@@ -23,9 +29,12 @@ function showForm(role){
 
 }
 
+
 // default form
 showForm("student");
 
+
+// tab switching
 studentTab.addEventListener("change", () => showForm("student"));
 companyTab.addEventListener("change", () => showForm("company"));
 
@@ -41,19 +50,25 @@ document.querySelectorAll(".form").forEach(form => {
 
     e.preventDefault();
 
+    // current role = form id
     const role = this.id;
 
+    // collect all form data
     const formData = new FormData(this);
 
+    // convert form data to normal object
     const data = Object.fromEntries(formData.entries());
 
+    // adding role manually
     data.role = role;
 
     console.log(data);
 
     try{
 
-      const res = await fetch("http://localhost:5000/signup", {
+      // using relative route because deployed frontend
+      // and backend are running together
+      const res = await fetch("/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -63,13 +78,16 @@ document.querySelectorAll(".form").forEach(form => {
 
       const result = await res.json();
 
+      // if signup fails
       if(!res.ok){
         alert(result.message);
         return;
       }
 
+      // success message
       alert("Account created successfully!");
 
+      // redirect to login page
       window.location.href = "login.html";
 
     }
