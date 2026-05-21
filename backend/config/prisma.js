@@ -1,16 +1,11 @@
-require("dotenv").config();
-
 const { PrismaClient } = require("@prisma/client");
-const { PrismaPg } = require("@prisma/adapter-pg");
-
-const connectionString = process.env.DATABASE_URL;
-
-const adapter = new PrismaPg({
-  connectionString,
-});
 
 const prisma = new PrismaClient({
-  adapter,
+  datasources: {
+    db: {
+      url: "postgresql://postgres:prabhleen@localhost:5432/postgres"
+    }
+  }
 });
 
 module.exports = prisma;

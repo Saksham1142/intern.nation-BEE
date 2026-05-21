@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "Admin",
+    "email": "admin@gmail.com",
+    "password": "Admin@123",
+    "role": "admin",
+    "adminId": "1234567890"
+  },
+  {
+    "id": 1773239770610,
+    "name": "Prabhleen Kaur",
+    "email": "prabhleen0742.becse24@chitkara.edu.in",
+    "password": "Prabh@123",
+    "role": "student",
+    "studentId": "2410990742",
+    "college": "Chitkara University",
+    "department": "CSE"
+  },
+  {
+    "id": 1773261179970,
+    "name": "Acme Labs",
+    "email": "acme@example.com",
+    "password": "Acme@123",
+    "role": "company",
+    "companyId": "1234567891",
+    "companyName": "Acme Labs",
+    "industry": "IT",
+    "location": "Delhi"
+  },
+  {
+    "id": 1773261226547,
+    "name": "SJ steels",
+    "email": "sakshamjain9350@gmail.com",
+    "password": "Sak@1142",
+    "role": "company",
+    "companyId": "1234567895",
+    "companyName": "SJ steels",
+    "industry": "Retail",
+    "location": "Chandigarh"
+  },
+  {
+    "id": 1773261494091,
+    "name": "Saksham Jain",
+    "email": "Sak@gmail.com",
+    "password": "Sak@1142",
+    "role": "student",
+    "studentId": "1234567895",
+    "college": "chitkara university",
+    "department": "CSE"
+  },
+  {
+    "id": 1777395025350,
+    "name": "Shreya Sharma",
+    "email": "shreya1682.becse24@chitkara.edu.in",
+    "password": "$2b$10$cSslKzXCAm11CeRhut9vA.wZ38ta8u3/7BTxDtshkU3zcglHBZAtO",
+    "role": "student",
+    "studentId": "2410991682",
+    "college": "Chitkara University",
+    "department": "CSE"
+  }
+]

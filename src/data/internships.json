@@ -1,0 +1,61 @@
+[
+  {
+    "id": 1,
+    "title": "Software Developer Trainee",
+    "company": "Microsoft",
+    "location": "Bangalore",
+    "stipend": "10,00,000 / annum",
+    "type": "Internship",
+    "department": "Engineering",
+    "openings": 3,
+    "deadline": "2026-04-15",
+    "duration": "3 months"
+  },
+  {
+    "id": 1773261357698,
+    "title": "SDE",
+    "company": "SJ steels",
+    "location": "Hybrid",
+    "stipend": "15,000",
+    "type": "Internship",
+    "department": "CSE",
+    "openings": 5,
+    "description": "8.5 cgpa plus are only eligible .\nPPO- 12 lakh",
+    "skills": [
+      "JAVA"
+    ],
+    "deadline": "2026-04-01",
+    "duration": "6 months"
+  },
+  {
+    "id": 1773337807472,
+    "company": "Company User",
+    "stipend": "12000",
+    "department": "Engineering",
+    "openings": 4,
+    "description": "React Internship",
+    "skills": [
+      "Javascript",
+      "React",
+      "Teamwork"
+    ],
+    "deadline": "2026-04-22",
+    "duration": "6 months"
+  },
+  {
+    "id": 1773341418816,
+    "title": "Junior Data Analyst",
+    "company": "Company User",
+    "location": "On-Site",
+    "stipend": "25000",
+    "type": "Internship",
+    "department": "Data Science",
+    "openings": "2",
+    "description": "Data Science Internship",
+    "skills": [
+      "Data Science"
+    ],
+    "deadline": "2026-04-03",
+    "duration": "6 months"
+  }
+]

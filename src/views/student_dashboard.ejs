@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Student Dashboard</title>
+
+    <link rel="stylesheet" href="/css/student_dashboard.css">
+</head>
+
+<body>
+
+<header>
+    <h1 class="logo">
+        <img src="/assets/logo.jpeg">
+        <span>intern.nation</span>
+    </h1>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="#">My Profile</a></li>
+            <li><a href="#" id="logoutBtn">Logout</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- USER INFO -->
+<section class="hero">
+    <div class="hero-text">
+        <h2>Welcome, <%= user.name %> 👋</h2>
+        <p>Email: <%= user.email %></p>
+        <p>Explore internships & placements tailored for you</p>
+    </div>
+</section>
+
+<!-- INTERNSHIPS -->
+<section id="internships">
+    <h2>Active Internship Drives</h2>
+
+    <div class="opportunities-grid">
+
+        <% internships.forEach(intern => { %>
+
+        <article class="card internship">
+            <div class="card-top">
+                <span class="status-tag">Actively hiring</span>
+                <img src="/assets/google.png" class="company-logo">
+            </div>
+
+            <h4 class="job-title"><%= intern.title %></h4>
+            <p class="company-name"><%= intern.company %></p>
+
+            <div class="card-details">
+                <p>📍 <%= intern.location %></p>
+                <p>💰 <%= intern.stipend || "Not specified" %></p>
+            </div>
+
+        </article>
+
+        <% }) %>
+
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>© intern.nation</p>
+</footer>
+
+<!-- LOGOUT -->
+<script>
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+
+    await fetch("/logout", {
+        method: "GET",
+        credentials: "include"
+    });
+
+    window.location.href = "/login.html";
+});
+</script>
+
+</body>
+</html>

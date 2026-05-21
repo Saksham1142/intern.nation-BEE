@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node backend/server.js",
     "dev": "node backend/server.js",
-    "test": "node --check backend/server.js"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -21,8 +21,7 @@
   },
   "homepage": "https://github.com/Saksham1142/intern.nation-BEE#readme",
   "dependencies": {
-    "@prisma/adapter-pg": "^7.8.0",
-    "@prisma/client": "^7.8.0",
+    "@prisma/client": "^6.19.3",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
@@ -33,8 +32,12 @@
     "mongodb": "^7.2.0",
     "mongoose": "^9.5.0",
     "pg": "^8.21.0",
-    "prisma": "^7.8.0",
+    "prisma": "^6.19.3",
     "socket.io": "^4.8.3",
     "socket.io-client": "^4.8.3"
+  },
+  "devDependencies": {
+    "jest": "^30.4.2",
+    "supertest": "^7.2.2"
   }
 }

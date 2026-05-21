@@ -49,6 +49,8 @@ document.querySelectorAll(".form").forEach(form => {
 
     data.role = role;
 
+    console.log(data);
+
     try{
 
       const res = await fetch("http://localhost:5000/signup", {
